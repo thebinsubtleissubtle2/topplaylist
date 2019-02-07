@@ -4,8 +4,10 @@
 // variables
 var search_bar_index = document.querySelector("#showcase #landing form");
 
+
 // events
 search_bar_index.addEventListener("submit", submitLanding);
+
 
 function submitLanding(e){
 	var get_value = document.querySelector("#showcase #landing input[type = \"text\"]").value;
