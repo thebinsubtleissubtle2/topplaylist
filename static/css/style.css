@@ -176,7 +176,9 @@ body{
 	text-align:center;
 }
 
-#showcase
+#showcase .results-wrapper #short-term, #showcase .results-wrapper #medium-term, #showcase .results-wrapper #long-term{
+	display: none;
+} 
 
 /* 
 	TODO:
