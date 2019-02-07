@@ -10,6 +10,7 @@ import spotipy
 import spotipy.util
 from spotipy import oauth2
 from spotipy.oauth2 import SpotifyClientCredentials
+import requests
 
 
 app = Bottle()
@@ -30,6 +31,12 @@ TEMPLATE_PATH.insert(0, "")
 # global functions
 
 def get_token():
+	""" 
+		Gets the access token
+
+		returns:
+		access_token - token from cache
+	"""
 	access_token = ""
 	token_info = SP_OAUTH2.get_cached_token()
 	if token_info:
@@ -46,8 +53,15 @@ def get_token():
 	return access_token
 
 def getSPOauthURI():
-    auth_url = SP_OAUTH2.get_authorize_url()
-    return auth_url
+	"""  
+		Gets the Log in URL from Spotify.
+
+		returns:
+		auth_url - log in url
+	"""
+
+	auth_url = SP_OAUTH2.get_authorize_url()
+	return auth_url
 
 
 def has_token():
@@ -61,6 +75,8 @@ def get_offset(offset, limit, mode):
 		return offset + limit
 	return offset - limit
 
+
+# check if app has token.
 spotify = has_token()
 
 
@@ -117,6 +133,7 @@ def search(keyword, type):
 def page(keyword, type, curr_offset):
 	"""
 		TODO: check if logged in.
+		TODO: have logged in mode.
 	"""
 	result = spotify.search(q = keyword, limit = LIMIT, offset = curr_offset, type = type)
 	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), link = getSPOauthURI())
@@ -124,11 +141,20 @@ def page(keyword, type, curr_offset):
 @app.route("/verified")
 def verify():
 	if get_token():
+		""" 
+			TODO: set encryption.
+		"""
 		redirect("/")
 
 @app.route("/most_played")
 @app.route("/most_played/")
+@app.route("/most_played", method = "POST")
+@app.route("/most_played/", method = "POST")
 def get_most_played():
+	"""
+		TODO: check if logged in.
+		TODO: have logged in mode.
+	"""
 	spotify = spotipy.Spotify(auth = get_token())
 	spotify.trace = False
 	logging.debug("Running get_most_played()")
@@ -140,6 +166,7 @@ def get_most_played():
 	long_term_artists = spotify.current_user_top_artists(time_range = "long_term", limit = 100)["items"]
 	long_term_tracks = spotify.current_user_top_tracks(time_range = "long_term", limit = 50)["items"]
 	return template("most_played.html", spotify = spotify, short_term_artists = short_term_artists, short_term_tracks = short_term_tracks, medium_term_artists = medium_term_artists, medium_term_tracks = medium_term_tracks, long_term_artists = long_term_artists, long_term_tracks = long_term_tracks, year = datetime.datetime.now().year)
+
 
 """
 	TODO: make playlist based on filter values and data shown.
