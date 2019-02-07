@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>TopPlaylist | Home</title>
+	<link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+	<header id="main-header">
+		<a href="/" id = "home">
+			<h1>TopPlaylist</h1>
+		</a>
+		<nav class="nav">
+			<ul class="nav-list">
+				<li><a href="#about">About</a></li>
+				<li><a href="https://www.github.com/thebinsubtleissubtle/topPlaylist">Github</a></li>
+			</ul>
+		</nav>
+	</header>
+	<section id="showcase">
+		<div id="landing">
+			<div class="container">
+				<div id="landing-text">
+					<form action="/" method = "post">
+						<input type="text" name="search" id="search-area" placeholder = "Search here...">
+						<select name="type" id="type">
+							<option value="album">Albums</option>
+							<option value="artist">Artists</option>
+							<option value="track">Tracks</option>
+						</select>
+						<input type="submit" value="Search">
+					</form>
+					<a href="{{link}}" type = "button" id = "spotify-link">Login Using Spotify</a>
+				</div>
+			</div>
+		</div>
+		<div id="about">
+			<div id="about-text">
+				<h1>ABOUT TOPPLAYLIST</h1>
+				<p>
+					TopPlaylist is an open-source web application to track the user's most played tracks and albums, and creates a playlist around it.
+				</p>
+				<p class = "small-text">
+					It also creates playlist for recommendations based on their music tastes based on their previously played tracks and artists.
+				</p>
+				<h1>You don't have to wait every year for wrapped anymore!</h1>
+				<a href="{{link}}" type = "button" id = "spotify-link">Login Using Spotify</a>
+			</div>
+		</div>
+	</section>
+	<footer>
+		<p>Icons made by <a href="http://bylucyg.com/" title="Lucy G">Lucy G</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
+		<p>&copy; {{year}} RC Pery.</p>
+	</footer>
+	<script src = "static/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,205 @@
+body{
+	height: 100%;
+	background-color: #f4f4f4;
+	font-weight: 18px;
+	font-family: Verdana;
+	line-height: 1.8em;
+	margin: 0;
+}
+
+/* global*/
+
+.container{
+	width: 80%;
+	margin: auto;
+	overflow: hidden;
+}
+
+/* header */
+
+#main-header{
+	background: #0099e6;
+	padding: 10px;
+	color: #fff;
+}
+
+#main-header h1{
+	width: 200px;
+}
+
+#main-header .nav ul{
+	padding: 0;
+	padding: 0;
+	list-style: none;
+	float: right;
+	position: relative;
+	bottom: 58px;
+}
+
+#main-header li{
+	display: inline;
+	padding: 10px;
+}
+
+#main-header a{
+	color: #fff;
+	text-decoration: none;
+	font-size: 18px;
+}
+
+#main-header #home{
+	color: #fff;
+	text-decoration: none;
+	font-size: 18px;
+}
+
+#main-header a:hover{
+	text-decoration:underline;
+}
+
+/* showcase */
+
+#showcase{
+	text-align:center;
+}
+
+#showcase #landing{
+	position: relative;
+	top: 50%;
+	width: 100%;
+	padding:250px 0 35% 0;
+	font-size: 28px;
+	background: url("../img/bg-5.jpeg");
+	background-repeat: no-repeat;
+	background-attachment:fixed;
+	opacity: 0.75;
+}
+
+#showcase #landing #landing-text{
+	padding-bottom: 20px;
+}
+
+#showcase #landing form{
+	padding-bottom: 40px;
+	width: 100%;
+	right: 200px;
+}
+
+#showcase #landing #search-area{
+	border: 3px solid #fff;
+	background: transparent;
+	border-radius: 40px;
+	color: #fff;
+	padding: 10px;
+	width: 65%;
+	font-size:20px;
+}
+
+#showcase #landing input[type = "submit"]{
+	background: transparent;
+	border: 3px solid #fff;
+	border-radius: 40px;
+	padding: 10px;
+	color: #fff;
+	width: 10%;
+	font-size: 18px;
+}
+
+#showcase #landing #type{
+	background: transparent;
+	border: 3px solid #fff;
+	border-radius: 40px;
+	padding: 10px;
+	color: #fff;
+	width: 20%;
+	font-size: 20px;
+}
+
+#showcase #landing #spotify-link{
+	border-radius: 40px;
+	padding: 15px;
+	text-decoration: none;
+	background: #1ed760;
+	color: #eee;
+}
+
+#showcase #landing #spotify-link:hover{
+	border: none;
+	text-decoration: underline;
+	color: #eee;
+}
+
+/* 
+	TODO: 
+		- make animations on #showcase #about
+		- opacity/transitions
+		- pass image variables
+ */
+
+#showcase #about{
+	position: relative;
+	top: 50%;
+	width: 100%;
+	padding:250px 0 35% 0;
+	font-size: 28px;
+	background: url("../img/bg-2.jpeg");
+	background-repeat: no-repeat;
+	background-attachment:fixed;
+	opacity: 0.75;
+	line-height: 1.4em;
+}
+
+#showcase #about #about-text{
+	padding: 20px;
+	background: #eee;
+}
+
+#showcase #about .small-text{
+	font-size: 21px;
+	line-height: 1em;
+}
+
+#showcase #about #spotify-link{
+	border-radius: 40px;
+	padding: 15px;
+	text-decoration: none;
+	background: #1ed760;
+	color: #eee;
+}
+
+#showcase #about #spotify-link:hover{
+	text-decoration: underline;
+	background-color: #1ed760;
+}
+
+#showcase .results-wrapper{
+	text-align:center;
+}
+
+#showcase
+
+/* 
+	TODO:
+		- make css on most-played.html;
+ */
+
+footer{
+	background: #000;
+	color: #fff;
+	text-align:center;
+	padding: 10px;
+}
+
+footer a{
+	color: #fff;
+	text-decoration: none;
+}
+
+footer a:hover{
+	text-decoration: underline;
+}
+
+footer a:visited{
+	color: #eee;
+	text-decoration: none;
+}
