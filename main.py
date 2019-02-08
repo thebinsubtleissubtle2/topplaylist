@@ -11,7 +11,7 @@ import spotipy.util
 from spotipy import oauth2
 from spotipy.oauth2 import SpotifyClientCredentials
 import requests
-
+import json
 
 app = Bottle()
 
@@ -25,6 +25,7 @@ CLIENT_CREDENTIALS = SpotifyClientCredentials(client_id = CLIENT_ID, client_secr
 SP_OAUTH2 = oauth2.SpotifyOAuth(client_id = CLIENT_ID, client_secret = CLIENT_SECRET, redirect_uri = "http://localhost:8000/verified", scope = SCOPE, cache_path = CACHE)
 LIMIT = 50
 OFFSET = 0
+SESSION = requests.Session()
 
 TEMPLATE_PATH.insert(0, "")
 
@@ -71,14 +72,23 @@ def has_token():
 	return spotify
 
 def get_offset(offset, limit, mode):
+	""" Gets offset according to modes. """
 	if mode == "next":
 		return offset + limit
 	return offset - limit
 
+def get_offset_data(prev_offset, next_offset, result, type):
+	""" Gets the current offset data then returns a JSON data, """
+	offset_data = dict()
+	offset_data["prev_offset"], offset_data["next_offset"], offset_data["total"] = prev_offset, next_offset, result[type + "s"]["total"]
+	return json.dumps(offset_data)
 
 # check if app has token.
-spotify = has_token()
-
+try:
+	spotify = has_token()
+except spotipy.client.SpotifyException:
+	token = get_token()
+	spotify = spotipy.Spotify(auth = token, client_credentials_manager = CLIENT_CREDENTIALS)
 
 # Static Routes
 @app.route("/static/css/<filepath:re:.*\.css>")
@@ -122,11 +132,13 @@ def get_results():
 @app.route("/search/<keyword>/<type>/")
 def search(keyword, type):
 	"""
+		Searhces data according to the filters.
 		TODO: check if logged in.
+		TODO: have logged in mode.
 	"""
 	result = spotify.search(q = keyword, limit = LIMIT, offset = OFFSET, type = type)
-	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), link = getSPOauthURI())
-
+	
+	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), result = result, type = type))
 
 @app.route("/search/<keyword>/<type>/<curr_offset:int>")
 @app.route("/search/<keyword>/<type>/<curr_offset:int>/")
@@ -135,15 +147,18 @@ def page(keyword, type, curr_offset):
 		TODO: check if logged in.
 		TODO: have logged in mode.
 	"""
+	if curr_offset < 0:
+		return template("error.html")
 	result = spotify.search(q = keyword, limit = LIMIT, offset = curr_offset, type = type)
-	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), link = getSPOauthURI())
+	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), result = result, type = type))
 
 @app.route("/verified")
 def verify():
 	if get_token():
 		""" 
-			TODO: set encryption.
+			TODO: get cookies from spotify auth link
 		"""
+		# print(SESSION.)
 		redirect("/")
 
 @app.route("/most_played")
@@ -174,6 +189,7 @@ def get_most_played():
 """
 
 # error pages
+@app.route("/error")
 @app.error(404)
 def error_page(error):
 	return template("error.html")
