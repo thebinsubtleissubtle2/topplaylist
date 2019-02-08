@@ -15,7 +15,7 @@ This app is not yet in production, so here's a todo-list:
 | Task | status |
 | ---- | ------ |
 | Get the most played songs based on term (short, medium, long) terms | [x] |
-| Make pagination function (prev, next) | [] |
+| Make pagination function (prev, next) | [x] |
 | Search function on most_played.html | [] |
 | Get song recommendations | [] |
 | Validate offsets based on total songs in the search query | [] |
@@ -40,7 +40,7 @@ This app is not yet in production, so here's a todo-list:
 | Modify the search results through CSS | [] |
 | Work on paginating results | [x] |
 | Get the 30-sec preview on each song | [] |
-| Make validation on pagination | [] |
+| Make validation on pagination | [x] |
 | Page numbers | [] |
 
 * most_played.html
