@@ -5,7 +5,7 @@
 	<meta name = "viewport" content = "width = device-width, initial-scale = 1.0">
 	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 	<title>TopPlaylist | Most Played</title>
-	<link rel="stylesheet" href="static/css/style.css">
+	<link rel="stylesheet" href="../static/css/style.css">
 </head>
 <body>
 	<header id="main-header">
@@ -21,19 +21,19 @@
 	</header> <!-- /header -->	
 	<section id="showcase">
 		<div class="container">
-			<form action="/most_played" method = "post">
-				<select name="type" id="">
+			<form action="/most_played" method = "post" id = "most_played">
+				<select name="type" id="type">
 					<option value="">Select type</option>
 					<option value="artist">Artist</option>
 					<option value="track">Track</option>
 				</select>
-				<select name="term" id="">
+				<select name="term" id="term">
 					<option value="">Select Term</option>
-					<option value="short term">Short Term</option>
-					<option value="medium term">Medium Term</option>
-					<option value="long term">Long Term</option>
+					<option value="short-term">Short Term</option>
+					<option value="medium-term">Medium Term</option>
+					<option value="long-term">Long Term</option>
 				</select>
-				<select name="displayNumber" id="">
+				<select name="displayNumber" id="displayNumber">
 					<option value="">Select number</option>
 					<option value="10">10</option>
 					<option value="20">20</option>
@@ -42,6 +42,7 @@
 				</select>
 				<input type="submit" value="Search">
 			</form>
+			<button id="make-playlist">Make Playlist</button>
 			<div class="results-wrapper">
 				<div id="short-term">
 					<h1>SHORT TERM</h1>
@@ -124,7 +125,7 @@
 							%end
 						</tbody>
 					</table>
-					<table id = "short-term-artists">
+					<table id = "medium-term-tracks">
 						<thead>
 							<th>#</th>
 							<th>Track Name</th>
@@ -161,7 +162,7 @@
 
 				<div id="long-term">
 					<h1>LONG TERM</h1>
-					<table>
+					<table id = "long-term-artists">
 						<thead>
 							<th>#</th>
 							<th>Artist Name</th>
@@ -182,7 +183,7 @@
 							%end
 						</tbody>
 					</table>
-					<table>
+					<table id = "long-term-tracks">
 						<thead>
 							<th>#</th>
 							<th>Track Name</th>
@@ -223,7 +224,7 @@
 	<footer>
 		<p>&copy; {{year}} RC Pery.</p>
 	</footer>
-	<script type = "text/javascript"></script>
+	<script type = "text/javascript" src = "../static/js/most_played.js"></script>
 	<script type = "text/javascript">
 		
 	</script>
