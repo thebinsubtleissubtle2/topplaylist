@@ -20,29 +20,25 @@
 		</nav>
 	</header> <!-- /header -->	
 	<section id="showcase">
-		<div class="container">
-			<form action="/most_played" method = "post" id = "most_played">
-				<select name="type" id="type">
-					<option value="">Select type</option>
-					<option value="artist">Artist</option>
-					<option value="track">Track</option>
-				</select>
-				<select name="term" id="term">
-					<option value="">Select Term</option>
-					<option value="short-term">Short Term</option>
-					<option value="medium-term">Medium Term</option>
-					<option value="long-term">Long Term</option>
-				</select>
-				<select name="displayNumber" id="displayNumber">
-					<option value="">Select number</option>
-					<option value="10">10</option>
-					<option value="20">20</option>
-					<option value="50">50</option>
-					<option value="100">100</option>
-				</select>
-				<input type="submit" value="Search">
-			</form>
-			<button id="make-playlist">Make Playlist</button>
+		<div id="most-played-wrapper">
+			<div id="search-field">
+				<form action="/most_played" method = "post" id = "most-played-form">
+					<select name="type" id="type">
+						<option value="">Select type</option>
+						<option value="artist">Artist</option>
+						<option value="track">Track</option>
+					</select>
+					<select name="term" id="term">
+						<option value="">Select Term</option>
+						<option value="short-term">Short Term</option>
+						<option value="medium-term">Medium Term</option>
+						<option value="long-term">Long Term</option>
+					</select>
+					<input type="submit" value="Search">
+				</form>
+				<button id="make-playlist">Make Playlist</button>
+			</div>
+			
 			<div class="results-wrapper">
 				<div id="short-term">
 					<h1>SHORT TERM</h1>
@@ -218,15 +214,13 @@
 					</table>
 				</div> <!-- /#long-term    -->
 			</div> <!-- /#.results-wrapper    -->
-		</div>
+		</div> <!-- /#search-wrapper   -->
 		<!-- TODO: "Make Playlist" button -->
 	</section> <!-- /section -->
 	<footer>
 		<p>&copy; {{year}} RC Pery.</p>
 	</footer>
-	<script type = "text/javascript" src = "../static/js/most_played.js"></script>
-	<script type = "text/javascript">
-		
-	</script>
+	<script src = "../../static/js/most_played.js"></script>
+
 </body>
 </html>
