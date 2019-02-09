@@ -1,10 +1,10 @@
-var search_bar_most_played = document.querySelector("#showcase #most_played");
+var search_bar_most_played = document.getElementById("most-played-form");
 
 search_bar_most_played.addEventListener("submit", filterList);
 /* TODO: make animations on filterList */
 function filterList(e){
-    var type = document.querySelector("#showcase #most_played #type").value;
-    var term = document.querySelector("#showcase #most_played #term").value;
+    var type = document.querySelector("#showcase #most-played-form #type").value;
+    var term = document.querySelector("#showcase #most-played-form #term").value;
     e.preventDefault();
     if(((type == null || type == "") && (term == null || term == "")) || ((type != null || type != "") && (term == null || term == "")) || (type == null || type == "") && (term != null || term != "")){
         alert("Please fill values!");      
