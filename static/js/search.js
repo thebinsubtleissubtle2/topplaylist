@@ -16,5 +16,7 @@ if(offset_data.next_offset > offset_data.total){
     next.style.display = "none";
 }
 else{
-    next.style.display = "none";
+    next.style.display = "inline";
 }
+
+document.getElementById("showcase").removeChild("#offset-data");
