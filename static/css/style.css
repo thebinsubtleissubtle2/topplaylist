@@ -63,6 +63,8 @@ body{
 	text-align:center;
 }
 
+/* #showcase index.html */
+
 #showcase #landing{
 	position: relative;
 	top: 50%;
@@ -73,10 +75,13 @@ body{
 	background-repeat: no-repeat;
 	background-attachment:fixed;
 	opacity: 0.75;
+
 }
 
 #showcase #landing #landing-text{
 	padding-bottom: 20px;
+	animation-name: load-landing;
+	animation-duration: 1s;
 }
 
 #showcase #landing form{
@@ -85,7 +90,8 @@ body{
 	right: 200px;
 }
 
-#showcase #landing #search-area{
+
+#showcase #landing #search-area-index #search-area{
 	border: 3px solid #fff;
 	background: transparent;
 	border-radius: 40px;
@@ -93,9 +99,19 @@ body{
 	padding: 10px;
 	width: 65%;
 	font-size:20px;
+	transition-property: background, border, color;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
 }
 
-#showcase #landing input[type = "submit"]{
+#showcase #landing #search-area-index #search-area:hover{
+	background: #fff;
+	color: #111;
+	border: none;
+}
+
+
+#showcase #landing #search-area-index input[type = "submit"]{
 	background: transparent;
 	border: 3px solid #fff;
 	border-radius: 40px;
@@ -103,9 +119,20 @@ body{
 	color: #fff;
 	width: 10%;
 	font-size: 18px;
+	transition-property: background, border, color;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
 }
 
-#showcase #landing #type{
+#showcase #landing #search-area-index input[type = "submit"]:hover{
+	background: #fff;
+	color: #111;
+	border: none;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#showcase #landing #search-area-index #type{
 	background: transparent;
 	border: 3px solid #fff;
 	border-radius: 40px;
@@ -113,6 +140,24 @@ body{
 	color: #fff;
 	width: 20%;
 	font-size: 20px;
+	transition-property: background, border, color;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
+
+#showcase #landing #search-area-index #type:hover{
+	background: #fff;
+	color: #111;
+	border: none;
+	cursor: pointer;
+	padding: 10px;
+}
+
+#showcase #landing #search-area-index #type option{
+	background: #f4f4f4;
+	color: #000;
+	font-size: 16px;
+	padding: 10px;
 }
 
 #showcase #landing #spotify-link{
@@ -152,6 +197,10 @@ body{
 #showcase #about #about-text{
 	padding: 20px;
 	background: #eee;
+	font-family: Arial;
+	animation-name: load-about;
+	animation-duration: 2s;
+	animation-fill-mode: forwards;
 }
 
 #showcase #about .small-text{
@@ -172,13 +221,14 @@ body{
 	background-color: #1ed760;
 }
 
+
+/* #showcase search.html */
 #showcase .results-wrapper{
 	text-align:center;
 	padding-top: 20px;
 }
 
-/* #showcase search.html */
-#showcase form{
+#showcase #search-area-search{
 	border: 3px solid #bb00cc;
 	width: 100%;
 	right: 200px;
@@ -186,7 +236,7 @@ body{
 	padding-bottom: 60px;
 }
 
-#showcase #search-area{
+#showcase #search-area-search #search-text{
 	border: 3px solid #000;
 	background: #fff;
 	border-radius: 40px;
@@ -196,7 +246,7 @@ body{
 	font-size:20px;
 }
 
-#showcase input[type = "submit"]{
+#showcase #search-area-search input[type = "submit"]{
 	background: #0099e6;
 	border: 3px solid #009966;
 	border-radius: 40px;
@@ -206,7 +256,7 @@ body{
 	font-size: 18px;
 }
 
-#showcase #type{
+#showcase #search-area-search #search-type{
 	background: #fff;
 	border: 3px solid #000;
 	border-radius: 40px;
@@ -215,6 +265,78 @@ body{
 	width: 20%;
 	font-size: 20px;
 }
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper{
+	padding: 10px;
+	background-color: #282923;
+	color: #fff;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result{
+	padding: 50px;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-album-image{
+	float: left;
+	left: 70%;
+	width: 20%;
+	height: 100%;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-album-image img{
+	width: 100%;
+	height: 100%;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-preview{
+	float: left;
+	position: relative;
+	border: 3px solid orange;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-header a{
+	color: #fff;
+	text-decoration: none;
+	transition-property: color;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-header a:hover{
+	color: #84bd00;
+	text-decoration: underline;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-artists h1{
+	text-align: left;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-artists{
+	padding: 20px;
+	margin-left:300px;
+	margin-right: 20px;
+	padding-bottom: 40px;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-artists ul{
+	list-style: none;
+	display: inline;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-album a{
+	color: #fff;
+	text-decoration: none;
+	transition-property: color;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
+
+#showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-album a:hover{
+	color: #84bd00;
+	text-decoration: underline;
+}
+
+ /* #showcase most_played.html */
 
 #showcase .results-wrapper .artist-results-wrapper .artist{
 	border: 3px solid #fff;
@@ -226,8 +348,32 @@ body{
 
 /* 
 	TODO:
-		- make css on most-played.html;
+		- make css on most_played.html;
+		- animate most_played.html
  */
+
+
+#showcase #most-played-wrapper{
+	height: 100%;
+	overflow: auto;
+	width: 100%;
+	border: 3px solid darkgreen;
+	position: relative;
+}
+
+#showcase #most-played-wrapper #search-field{
+ 	border: 3px solid pink;
+ }
+
+
+
+#showcase #most-played-wrapper #search-field #most-played-form{
+	border: 3px solid red;
+ }
+
+#showcase #make-playlist{
+	display: inline;
+ }
 
 footer{
 	background: #000;
@@ -249,3 +395,34 @@ footer a:visited{
 	color: #eee;
 	text-decoration: none;
 }
+
+
+/*animations index.html*/
+@keyframes load-landing{
+	from{
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes load-about{
+	from{
+		top: -1000px;
+	}
+	to{
+		top: 50%;
+	}
+}
+
+
+/*
+	TODO: 
+		- animations on most_played.html;
+*/
+
+/*
+	TODO: 
+		- make every page responsive (@media(min-width));
+*/
