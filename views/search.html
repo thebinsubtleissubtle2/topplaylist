@@ -19,94 +19,102 @@
 		</nav>
 	</header>
 	<section id="showcase">
-		<form action="/" method = "post">
-			<input type="text" name="search" id="search-area" placeholder = "Search here..." value = "{{keyword}}">
-			<select name="type" id="type">
-				<option value="album">Albums</option>
-				<option value="artist">Artists</option>
-				<option value="track">Tracks</option>
-			</select>
-			<input type="submit" value="Search">
-		</form>
-		<div class="results-wrapper">
-			<div class="container">
-				<!-- {{result}} -->
-				%if type == "track":
-					<div class="track-results-wrapper">
-						%for item in result["tracks"]["items"]:
-							<div class="track-album-image">
-								%if len(item["album"]["images"]) > 0:
-									<img src="{{item['album']['images'][0]['url']}}" alt="{{item['album']['name']}}" width = "100" height = "100">
-								%else:
-									<img src="../../img/track.jpeg" alt="{{item['album']['name']}}" width = "100" height = "100">
-								%end
-							</div>
-							<div class="track-header">
-								<h1> 
-									<a href="{{item['external_urls']['spotify']}}" target = "_blank">{{item["name"]}}</a>
-								</h1>
-							</div>
-							<div class="track-artists">
-								<ul>
-									%for artist in item["artists"]:
-										<li>{{artist["name"]}}</li>
-									%end
-								</ul>
-							</div>
-						%end
-					</div>
-				<p class = "number-of-tracks">
-					There are {{result["tracks"]["total"]}} results on "{{keyword}}".
-				</p>
-				<!-- TODO: albums and artists types -->
-				%elif type == "album":
-					<div class="album-results-wrapper">
-						%for item in result["albums"]["items"]:
-							<div class="album">
-								<div class="album-image">
-									%if len(item["images"]) > 0:
-										<img src="{{item['images'][0]['url']}}" alt="{{item['name']}}" width = "100" height = "100">
-									%else:
-										<img src="../../img/album.jpeg" alt="{{item['name']}}" width = "100" height = "100">
-									%end
-								</div>
-								<div class="album-header">
-									<h1>
-										<a href="{{item['external_urls']['spotify']}}" target = "_blank">{{item['name']}}</a>
-									</h1>
-								</div>
-								<div class="album-artists">
-									<ul>
-										%for artist in item["artists"]:
-											<li>{{artist["name"]}}</li>
+		<div id="search-wrapper">
+			<form action="/" method = "post" id = "search-area-search">
+				<input type="text" name="search" id="search-text" placeholder = "Search here..." value = "{{keyword}}">
+				<select name="type" id="search-type">
+					<option id = "search-album" value="album">Albums</option>
+					<option id = "search-artist" value="artist">Artists</option>
+					<option id = "search-track" value="track">Tracks</option>
+				</select>
+					<input type="submit" value="Search">
+			</form>
+			<div class="results-wrapper">
+					%if type == "track":
+						<div class="track-results-wrapper">
+							%for item in result["tracks"]["items"]:
+								<div class="track-result">
+									<div class="track-album-image">
+										%if len(item["album"]["images"]) > 0:
+											<img src="{{item['album']['images'][0]['url']}}" alt="{{item['album']['name']}}">
+										%else:
+											<img src="../../img/track.jpeg" alt="{{item['album']['name']}}" width = "100" height = "100">
 										%end
-									</ul>
+									</div>
+									<div class="track-preview">
+										<a href="{{item['preview_url']}}" target = "_blank">Preview</a>
+									</div>
+									<div class="track-header">
+										<h1> 
+											<a href="{{item['external_urls']['spotify']}}" target = "_blank">{{item["name"]}}</a>
+										</h1>
+									</div>
+									<div class="track-artists">
+										<h1>Artists:</h1>
+										<ul>
+											%for artist in item["artists"]:
+												<li>{{artist["name"]}}</li>
+											%end
+										</ul>
+									</div>
+									<div class="track-album">
+										<p>From the album <a href="{{item['album']['external_urls']['spotify']}}" target = "_blank">{{item['album']['name']}}</a>.</p>
+									</div>
 								</div>
-							</div>
-						%end
-					</div>
-				%elif type == "artist":
-					<div class="artist-results-wrapper">
-						%for item in result["artists"]["items"]:
-							<div class="artist">
-								<div class="artist-image">
-									%if len(item["images"]) > 0:
-										<img src="{{item['images'][0]['url']}}" alt="{{item['name']}}" width = "100" height = "100">
-									%else:
-										<img src="../../static/img/person-placeholder.jpg" alt="{{item['name']}}" width = "100" height = "100">
-									%end
+							%end
+						</div>
+					<p class = "number-of-tracks">
+						There are {{result["tracks"]["total"]}} results on "{{keyword}}".
+					</p>
+					<!-- TODO: albums and artists types -->
+					%elif type == "album":
+						<div class="album-results-wrapper">
+							%for item in result["albums"]["items"]:
+								<div class="album">
+									<div class="album-image">
+										%if len(item["images"]) > 0:
+											<img src="{{item['images'][0]['url']}}" alt="{{item['name']}}" width = "100" height = "100">
+										%else:
+											<img src="../../img/album.jpeg" alt="{{item['name']}}" width = "100" height = "100">
+										%end
+									</div>
+									<div class="album-header">
+										<h1>
+											<a href="{{item['external_urls']['spotify']}}" target = "_blank">{{item['name']}}</a>
+										</h1>
+									</div>
+									<div class="album-artists">
+										<ul>
+											%for artist in item["artists"]:
+												<li>{{artist["name"]}}</li>
+											%end
+										</ul>
+									</div>
 								</div>
-								<div class="artist-header">
-									<h1>
-										<a href="{{item['external_urls']['spotify']}}" target = "_blank">{{item['name']}}</a>
-									</h1>
+							%end
+						</div>
+					%elif type == "artist":
+						<div class="artist-results-wrapper">
+							%for item in result["artists"]["items"]:
+								<div class="artist">
+									<div class="artist-image">
+										%if len(item["images"]) > 0:
+											<img src="{{item['images'][0]['url']}}" alt="{{item['name']}}" width = "100" height = "100">
+										%else:
+											<img src="../../static/img/person-placeholder.jpg" alt="{{item['name']}}" width = "100" height = "100">
+										%end
+									</div>
+									<div class="artist-header">
+										<h1>
+											<a href="{{item['external_urls']['spotify']}}" target = "_blank">{{item['name']}}</a>
+										</h1>
+									</div>
 								</div>
-							</div>
-						%end
-					</div>
-				%end
-			</div>
-		</div>
+							%end
+						</div> <!-- /.artists-results-wrapper   -->
+					%end
+			</div> <!-- /.results-wrapper    -->
+		</div> <!-- /##search-wrapper   -->
 
 		<!-- TODO: make prev link disabled when offset reaches zero -->
 		<a id = "prev" href="../../../search/{{keyword}}/{{type}}/{{prev_offset}}">Previous</a>
