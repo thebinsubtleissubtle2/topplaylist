@@ -137,7 +137,6 @@ def search(keyword, type):
 		TODO: have logged in mode.
 	"""
 	result = spotify.search(q = keyword, limit = LIMIT, offset = OFFSET, type = type)
-	
 	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), result = result, type = type))
 
 @app.route("/search/<keyword>/<type>/<curr_offset:int>")
@@ -159,7 +158,7 @@ def verify():
 			TODO: get cookies from spotify auth link
 		"""
 		# print(SESSION.)
-		redirect("/")
+		redirect("/most_played")
 
 @app.route("/most_played")
 @app.route("/most_played/")
@@ -187,6 +186,8 @@ def get_most_played():
 	TODO: make playlist based on filter values and data shown.
 	TODO: make function that handles pagination.
 """
+
+
 
 # error pages
 @app.route("/error")
