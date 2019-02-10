@@ -37,9 +37,9 @@ This app is not yet in production, so here's a todo-list:
 
 | Task | Status |
 | ---- | ------ |
-| Modify the search results through CSS | [] |
+| Modify the search results through CSS | [x] |
 | Work on paginating results | [x] |
-| Get the 30-sec preview on each song | [] |
+| Get the 30-sec preview on each song | [x] |
 | Make validation on pagination | [x] |
 | Page numbers | [] |
 
@@ -52,7 +52,6 @@ This app is not yet in production, so here's a todo-list:
 | Search function | [] |
 | Get the 30-sec preview on each song | [] |
 | Make playlist based on these results | [] |
-| Work on paginating results | [] |
 
 * Others
 
