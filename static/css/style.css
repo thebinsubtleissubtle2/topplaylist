@@ -29,7 +29,6 @@ body{
 
 #main-header .nav ul{
 	padding: 0;
-	padding: 0;
 	list-style: none;
 	float: right;
 	position: relative;
@@ -107,7 +106,7 @@ body{
 #showcase #landing #search-area-index #search-area:hover{
 	background: #fff;
 	color: #111;
-	border: none;
+	border: 3px solid #fff;
 }
 
 
@@ -127,7 +126,7 @@ body{
 #showcase #landing #search-area-index input[type = "submit"]:hover{
 	background: #fff;
 	color: #111;
-	border: none;
+	border: 3px solid #fff;
 	text-decoration: underline;
 	cursor: pointer;
 }
@@ -148,7 +147,7 @@ body{
 #showcase #landing #search-area-index #type:hover{
 	background: #fff;
 	color: #111;
-	border: none;
+	border: 3px solid #fffe;
 	cursor: pointer;
 	padding: 10px;
 }
@@ -223,57 +222,97 @@ body{
 
 
 /* #showcase search.html */
-#showcase .results-wrapper{
-	text-align:center;
-	padding-top: 20px;
+#showcase #search-wrapper {
+	background: #282923;
+	color: #fff;
 }
 
-#showcase #search-area-search{
-	border: 3px solid #bb00cc;
+#showcase #search-wrapper .results-wrapper{
+	text-align:center;
+	padding-top: 20px;
+	border-top: 3px solid #84bd00;
+}
+
+/* #search-area-search */
+
+#showcase #search-wrapper #search-area-search{
 	width: 100%;
 	right: 200px;
 	text-align: center;
-	padding-bottom: 60px;
+	/*padding-bottom: 60px;*/
 }
 
-#showcase #search-area-search #search-text{
-	border: 3px solid #000;
-	background: #fff;
+#showcase #search-wrapper #search-area-search #search-text{
+	border: 3px solid #aaa;
+	background: transparent;
 	border-radius: 40px;
-	color: #000;
+	color: #aaa;
 	padding: 10px;
 	width: 40%;
 	font-size:20px;
+	transition-property: background, color, border;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
 }
 
-#showcase #search-area-search input[type = "submit"]{
-	background: #0099e6;
-	border: 3px solid #009966;
+#showcase #search-wrapper #search-area-search #search-text:hover{
+	border: 3px solid #fff;
+	background: #fff;
+	color: #000;
+}
+
+#showcase #search-wrapper #search-area-search input[type = "submit"]{
+	background: transparent;
+	border: 3px solid #aaa;
 	border-radius: 40px;
 	padding: 10px;
-	color: #fff;
+	color: #aaa;
 	width: 10%;
 	font-size: 18px;
+	transition-property: background, color, border;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
 }
 
-#showcase #search-area-search #search-type{
+#showcase #search-wrapper #search-area-search input[type = "submit"]:hover{
+	border: 3px solid #fff;
 	background: #fff;
-	border: 3px solid #000;
+	color: #000;
+	cursor: pointer;
+}
+
+#showcase #search-wrapper #search-area-search #search-type{
+	background: transparent;
+	border: 3px solid #aaa;
 	border-radius: 40px;
 	padding: 10px;
-	color: #000;
+	color: #aaa;
 	width: 20%;
 	font-size: 20px;
+	transition-property: background, color, border;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
 }
 
+#showcase #search-wrapper #search-area-search #search-type:hover{
+	border: 3px solid #fff;
+	background: #fff;
+	color: #000;
+	cursor: pointer;
+}
+
+
+/* track results */
+
 #showcase #search-wrapper .results-wrapper .track-results-wrapper{
-	padding: 10px;
+	/*padding: 10px;*/
 	background-color: #282923;
 	color: #fff;
 }
 
 #showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result{
 	padding: 50px;
+	border-bottom: 5px solid #0099e6;
 }
 
 #showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-album-image{
@@ -284,8 +323,8 @@ body{
 }
 
 #showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-album-image img{
-	width: 100%;
-	height: 100%;
+	width: 80%;
+	height: 80%;
 }
 
 #showcase #search-wrapper .results-wrapper .track-results-wrapper .track-result .track-preview{
@@ -336,14 +375,108 @@ body{
 	text-decoration: underline;
 }
 
- /* #showcase most_played.html */
+/* album results */
 
-#showcase .results-wrapper .artist-results-wrapper .artist{
-	border: 3px solid #fff;
+#showcase #search-wrapper .results-wrapper .album-results-wrapper{
+	/*padding: 10px;*/
+	background-color: #282923;
+	color: #fff;
 }
 
-#showcase .results-wrapper #short-term, #showcase .results-wrapper #medium-term, #showcase .results-wrapper #long-term{
-	display: none;
+#showcase #search-wrapper .results-wrapper .album-results-wrapper .album-result{
+	padding: 50px;
+	border-bottom: 5px solid #0099e6;
+}
+
+#showcase #search-wrapper .results-wrapper .album-results-wrapper .album-result .album-image{
+	float: left;
+	left: 70%;
+	width: 20%;
+	height: 100%;
+}
+
+#showcase #search-wrapper .results-wrapper .album-results-wrapper .album-result .album-image img{
+	width: 80%;
+	height: 80%;
+}
+
+
+#showcase #search-wrapper .results-wrapper .album-results-wrapper .album-result .album-header a{
+	color: #fff;
+	text-decoration: none;
+	transition-property: color;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
+
+#showcase #search-wrapper .results-wrapper .album-results-wrapper .album-result .album-header a:hover{
+	color: #84bd00;
+	text-decoration: underline;
+}
+
+#showcase #search-wrapper .results-wrapper .album-results-wrapper .album-result .album-artists h1{
+	text-align: left;
+}
+
+#showcase #search-wrapper .results-wrapper .album-results-wrapper .album-result .album-artists{
+	padding: 20px;
+	margin-left:300px;
+	margin-right: 20px;
+	padding-bottom: 40px;
+}
+
+#showcase #search-wrapper .results-wrapper .album-results-wrapper .album-result .album-artists ul{
+	list-style: none;
+	display: inline;
+}
+
+/* artist results */
+
+#showcase #search-wrapper .results-wrapper .artist-results-wrapper{
+	/*padding: 10px;*/
+	background-color: #282923;
+	color: #fff;
+}
+
+#showcase #search-wrapper .results-wrapper .artist-results-wrapper .artist-result{
+	padding: 50px;
+	border-bottom: 5px solid #0099e6;
+}
+
+#showcase #search-wrapper .results-wrapper .artist-results-wrapper .artist-result .artist-image{
+	float: left;
+	left: 70%;
+	width: 20%;
+	height: 100%;
+}
+
+#showcase #search-wrapper .results-wrapper .artist-results-wrapper .artist-result .artist-image img{
+	width: 80%;
+	height: 80%;
+}
+
+
+#showcase #search-wrapper .results-wrapper .artist-results-wrapper .artist-result .artist-header a{
+	color: #fff;
+	text-decoration: none;
+	transition-property: color;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
+
+#showcase #search-wrapper .results-wrapper .artist-results-wrapper .artist-result .artist-header a:hover{
+	color: #84bd00;
+	text-decoration: underline;
+}
+
+
+ /* #showcase most_played.html */
+
+
+#showcase #most-played-wrapper .results-wrapper #short-term, #showcase #most-played-wrapper .results-wrapper #medium-term, #showcase #most-played-wrapper .results-wrapper #long-term{
+	/*display: none;*/
+	animation-name: result-slide;
+	animation-duration: 3s;
 } 
 
 /* 
@@ -357,19 +490,77 @@ body{
 	height: 100%;
 	overflow: auto;
 	width: 100%;
-	border: 3px solid darkgreen;
 	position: relative;
+	background: #292823;
+	color: #fff;
 }
 
 #showcase #most-played-wrapper #search-field{
  	border: 3px solid pink;
- }
+ 	margin-bottom: 20px;
+}
 
 
 
-#showcase #most-played-wrapper #search-field #most-played-form{
-	border: 3px solid red;
- }
+#showcase #most-played-wrapper #most-played-form #type{
+	background: transparent;
+	border: 3px solid #aaa;
+	border-radius: 40px;
+	padding: 10px;
+	color: #aaa;
+	width: 10%;
+	font-size: 18px;
+	transition-property: background, color, border;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
+
+#showcase #most-played-wrapper #most-played-form #type:hover{
+	border: 3px solid #fff;
+	background: #fff;
+	color: #000;
+	cursor: pointer;
+}
+
+#showcase #most-played-wrapper #most-played-form input[type = "submit"]{
+	background: transparent;
+	border: 3px solid #aaa;
+	border-radius: 40px;
+	padding: 10px;
+	color: #aaa;
+	width: 7%;
+	font-size: 18px;
+	transition-property: background, color, border;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
+
+#showcase #most-played-wrapper #most-played-form input[type = "submit"]:hover{
+	border: 3px solid #fff;
+	background: #fff;
+	color: #000;
+	cursor: pointer;
+}
+
+#showcase #most-played-wrapper #most-played-form #term{
+	background: transparent;
+	border: 3px solid #aaa;
+	border-radius: 40px;
+	padding: 10px;
+	color: #aaa;
+	width: 10%;
+	font-size: 18px;
+	transition-property: background, color, border;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
+
+#showcase #most-played-wrapper #most-played-form #term:hover{
+	border: 3px solid #fff;
+	background: #fff;
+	color: #000;
+	cursor: pointer;
+}
 
 #showcase #make-playlist{
 	display: inline;
@@ -416,6 +607,16 @@ footer a:visited{
 	}
 }
 
+
+/*animations most-played.html*/
+@keyframes result-slide{
+	from{
+		left: -300px;
+	}
+	to{
+		left: 50%;
+	}
+}
 
 /*
 	TODO: 
