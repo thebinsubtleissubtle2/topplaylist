@@ -125,6 +125,7 @@ def root():
 @app.route("/search/<keyword>/<type>", method = "POST")
 @app.route("/search/<keyword>/<type>/", method = "POST")
 def get_results():
+	logging.debug("Redirecting to /search/{}/{}".format(request.forms.get("search"), request.forms.get("type")))
 	redirect("/search/" + request.forms.get("search") + "/" + request.forms.get("type"))
 	search(request.forms.get("search"), request.forms.get("type"))
 
@@ -136,20 +137,32 @@ def search(keyword, type):
 		TODO: check if logged in.
 		TODO: have logged in mode.
 	"""
-	result = spotify.search(q = keyword, limit = LIMIT, offset = OFFSET, type = type)
-	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), result = result, type = type))
+	try:
+		get_type = {}
+		get_type["type"] = type
+		result = spotify.search(q = keyword, limit = LIMIT, offset = OFFSET, type = type)
+		return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), result = result, type = type), get_type = json.dumps(get_type))
+	except spotipy.client.SpotifyException:
+		pass
 
 @app.route("/search/<keyword>/<type>/<curr_offset:int>")
 @app.route("/search/<keyword>/<type>/<curr_offset:int>/")
 def page(keyword, type, curr_offset):
 	"""
+		returns "search.html". For pagination purposes
 		TODO: check if logged in.
 		TODO: have logged in mode.
 	"""
-	if curr_offset < 0:
-		return template("error.html")
-	result = spotify.search(q = keyword, limit = LIMIT, offset = curr_offset, type = type)
-	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), result = result, type = type))
+	try:
+		if curr_offset < 0:
+			return template("error.html")
+		get_type = {}
+		get_type["type"] = type
+		result = spotify.search(q = keyword, limit = LIMIT, offset = curr_offset, type = type)
+		return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), result = result, type = type), get_type = json.dumps(get_type))
+	except spotipy.client.SpotifyException:
+		pass
+
 
 @app.route("/verified")
 def verify():
