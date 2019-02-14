@@ -1,8 +1,13 @@
+@font-face{
+	font-family: "Abel";
+	src: url("../fonts/Abel-Regular.ttf");
+}
+
 body{
 	height: 100%;
 	background-color: #f4f4f4;
 	font-weight: 18px;
-	font-family: Verdana;
+	font-family: "Abel", sans-serif;
 	line-height: 1.8em;
 	margin: 0;
 }
@@ -18,7 +23,7 @@ body{
 /* header */
 
 #main-header{
-	background: #0099e6;
+	background-color: #0099e6;
 	padding: 10px;
 	color: #fff;
 }
@@ -70,7 +75,8 @@ body{
 	width: 100%;
 	padding:250px 0 35% 0;
 	font-size: 28px;
-	background: url("../img/bg-5.jpeg");
+	background-color: #f4f4f4;
+	background-image: url("../img/bg-5.jpeg");
 	background-repeat: no-repeat;
 	background-attachment:fixed;
 	opacity: 0.75;
@@ -163,6 +169,7 @@ body{
 	border-radius: 40px;
 	padding: 15px;
 	text-decoration: none;
+	font-size: 20px;
 	background: #1ed760;
 	color: #eee;
 }
@@ -186,7 +193,8 @@ body{
 	width: 100%;
 	padding:250px 0 35% 0;
 	font-size: 28px;
-	background: url("../img/bg-2.jpeg");
+	background-color: #f4f4f4;
+	background-image: url("../img/bg-2.jpeg");
 	background-repeat: no-repeat;
 	background-attachment:fixed;
 	opacity: 0.75;
@@ -210,6 +218,7 @@ body{
 #showcase #about #spotify-link{
 	border-radius: 40px;
 	padding: 15px;
+	font-size: 20px;
 	text-decoration: none;
 	background: #1ed760;
 	color: #eee;
@@ -473,8 +482,20 @@ body{
  /* #showcase most_played.html */
 
 
+#most-played-body{
+	width: 100%;
+	height: 100%;
+	background-color: #292823;
+	position: relative;
+}
+
+#most-played-body footer{
+	position:relative;
+	bottom: 100%;
+}
+
 #showcase #most-played-wrapper .results-wrapper #short-term, #showcase #most-played-wrapper .results-wrapper #medium-term, #showcase #most-played-wrapper .results-wrapper #long-term{
-	/*display: none;*/
+	display: none;
 	animation-name: result-slide;
 	animation-duration: 3s;
 } 
@@ -487,16 +508,15 @@ body{
 
 
 #showcase #most-played-wrapper{
-	height: 100%;
-	overflow: auto;
 	width: 100%;
-	position: relative;
+	height: 100%;
 	background: #292823;
+	/*background-attachment: ;*/
 	color: #fff;
+
 }
 
 #showcase #most-played-wrapper #search-field{
- 	border: 3px solid pink;
  	margin-bottom: 20px;
 }
 
@@ -508,7 +528,7 @@ body{
 	border-radius: 40px;
 	padding: 10px;
 	color: #aaa;
-	width: 10%;
+	width: 12%;
 	font-size: 18px;
 	transition-property: background, color, border;
 	transition-duration: 0.225s;
@@ -528,7 +548,7 @@ body{
 	border-radius: 40px;
 	padding: 10px;
 	color: #aaa;
-	width: 7%;
+	width: 10%;
 	font-size: 18px;
 	transition-property: background, color, border;
 	transition-duration: 0.225s;
@@ -548,7 +568,7 @@ body{
 	border-radius: 40px;
 	padding: 10px;
 	color: #aaa;
-	width: 10%;
+	width: 15%;
 	font-size: 18px;
 	transition-property: background, color, border;
 	transition-duration: 0.225s;
@@ -562,10 +582,33 @@ body{
 	cursor: pointer;
 }
 
-#showcase #make-playlist{
-	display: inline;
- }
+#showcase #most-played-wrapper #make-playlist{
+	background: transparent;
+	border: 3px solid #aaa;
+	border-radius: 40px;
+	padding: 10px;
+	color: #aaa;
+	width: 20%;
+	font-size: 18px;
+	margin: 10px 0;
+	transition-property: background, color, border;
+	transition-duration: 0.225s;
+	transition-timing-function: ease-in;
+}
 
+#showcase #most-played-wrapper #make-playlist:hover{
+	background: #84bd00;
+	color: #fff;
+	border: 3px solid #84bd00;
+	cursor: pointer;
+}
+
+#showcase #most-played-wrapper .results-wrapper{
+	border: 3px solid blue;
+}
+
+
+/* footer */
 footer{
 	background: #000;
 	color: #fff;
@@ -614,7 +657,7 @@ footer a:visited{
 		left: -300px;
 	}
 	to{
-		left: 50%;
+		left: 300px;
 	}
 }
 
