@@ -7,7 +7,7 @@
 	<title>TopPlaylist | Most Played</title>
 	<link rel="stylesheet" href="../static/css/style.css">
 </head>
-<body>
+<body id = "most-played-body">
 	<header id="main-header">
 		<a href="/" id = "home">
 			<h1>TopPlaylist</h1>
@@ -22,21 +22,23 @@
 	<section id="showcase">
 		<div id="most-played-wrapper">
 			<div id="search-field">
-				<form action="/most_played" method = "post" id = "most-played-form">
-					<select name="type" id="type">
-						<option value="">Select type</option>
-						<option value="artist">Artist</option>
-						<option value="track">Track</option>
-					</select>
-					<select name="term" id="term">
-						<option value="">Select Term</option>
-						<option value="short-term">Short Term</option>
-						<option value="medium-term">Medium Term</option>
-						<option value="long-term">Long Term</option>
-					</select>
-					<input type="submit" value="Search">
-				</form>
-				<button id="make-playlist">Make Playlist</button>
+				<div class="container">
+					<form action="/most_played" method = "post" id = "most-played-form">
+						<select name="type" id="type">
+							<option value="">Select type</option>
+							<option value="artist">Artist</option>
+							<option value="track">Track</option>
+						</select>
+						<select name="term" id="term">
+							<option value="">Select Term</option>
+							<option value="short-term">Short Term</option>
+							<option value="medium-term">Medium Term</option>
+							<option value="long-term">Long Term</option>
+						</select>
+						<input type="submit" value="Search">
+					</form>
+					<button id="make-playlist">Make Playlist</button>
+				</div>
 			</div>
 			
 			<div class="results-wrapper">
@@ -53,13 +55,13 @@
 								<tr>
 									<td>{{i + 1}}</td>
 									<td>
-										<div class="short-term-image">
+										<span class = "image-wrapper">
 											%if len(artist["images"]) > 0:
 												<img src="{{artist['images'][0]['url']}}" alt="{{artist['name']}}" width = "100" height = "100">
 											%else:
 												<img src="static/img/person-placeholder.jpg" alt="{{artist['name']}}" width = "100" height = "100">
 											%end
-										</div>
+										</span>
 										{{artist["name"]}}
 									</td>
 								</tr>
@@ -69,7 +71,7 @@
 						<table id = "short-term-tracks">
 							<thead>
 								<th>#</th>
-								<th>Track Name</th>
+								<th colspan = "2">Track Name</th>
 								<th>Artist</th>
 								<th>Album</th>
 							</thead>
@@ -77,6 +79,16 @@
 								%for i, track in enumerate(short_term_tracks):
 								<tr>
 									<td>{{i + 1}}</td>
+									<td>
+										%if track["preview_url"]:	
+												<audio class = "audio-track-preview" controls>
+													<source src = "{{track['preview_url']}}" type = "audio/mpeg">
+												</audio>
+										%else:
+												<p>No Preview Available</p>
+											
+										%end
+									</td>
 									<td>{{track["name"]}}</td>
 									<td>
 										<ul>
@@ -90,9 +102,11 @@
 										</ul>
 									</td>
 									<td>
-										%if len(track["album"]["images"]) > 0:
-											<img src="{{track['album']['images'][0]['url']}}" alt="{{track['album']['name']}}" width = "100" height = "100">
-										%end
+										<span class = "image-wrapper">
+											%if len(track["album"]["images"]) > 0:
+												<img src="{{track['album']['images'][0]['url']}}" alt="{{track['album']['name']}}" width = "100" height = "100">
+											%end
+										</span>
 										{{track["album"]["name"]}}
 									</td>
 								</tr>
@@ -113,11 +127,13 @@
 								<tr>
 									<td>{{i + 1}}</td>
 									<td>
-										%if len(artist["images"]) > 0:
-											<img src="{{artist['images'][0]['url']}}" alt="{{artist['name']}}" width = "100" height = "100">
-										%else:
-											<img src="static/img/person-placeholder.jpg" alt="{{artist['name']}}" width = "100" height = "100">
-										%end
+										<span class="image-wrapper">
+											%if len(artist["images"]) > 0:
+												<img src="{{artist['images'][0]['url']}}" alt="{{artist['name']}}" width = "100" height = "100">
+											%else:
+												<img src="static/img/person-placeholder.jpg" alt="{{artist['name']}}" width = "100" height = "100">
+											%end
+										</span>
 										{{artist["name"]}}
 									</td>
 								</tr>
@@ -127,7 +143,7 @@
 						<table id = "medium-term-tracks">
 							<thead>
 								<th>#</th>
-								<th>Track Name</th>
+								<th colspan = "2">Track Name</th>
 								<th>Artist</th>
 								<th>Album</th>
 							</thead>
@@ -135,7 +151,18 @@
 								%for i, track in enumerate(medium_term_tracks):
 								<tr>
 									<td>{{i + 1}}</td>
+									<td>
+										%if track["preview_url"]:	
+												<audio class = "audio-track-preview" controls>
+													<source src = "{{track['preview_url']}}" type = "audio/mpeg">
+												</audio>
+										%else:
+												<p>No Preview Available</p>
+											
+										%end
+									</td>
 									<td>{{track["name"]}}</td>
+									
 									<td>
 										<ul>
 										%for i, artists_name in enumerate(track["artists"]):
@@ -148,9 +175,11 @@
 										</ul>
 									</td>
 									<td>
-										%if len(track["album"]["images"]) > 0:
-											<img src="{{track['album']['images'][0]['url']}}" alt="{{track['album']['name']}}" width = "100" height = "100">
-										%end
+										<span class="image-wrapper">
+											%if len(track["album"]["images"]) > 0:
+												<img src="{{track['album']['images'][0]['url']}}" alt="{{track['album']['name']}}" width = "100" height = "100">
+											%end
+										</span>
 										{{track["album"]["name"]}}
 									</td>
 								</tr>
@@ -171,11 +200,13 @@
 								<tr>
 									<td>{{i + 1}}</td>
 									<td>
-										%if len(artist["images"]) > 0:
-											<img src="{{artist['images'][0]['url']}}" alt="{{artist['name']}}" width = "100" height = "100">
-										%else:
-											<img src="static/img/person-placeholder.jpg" alt="{{artist['name']}}" width = "100" height = "100">
-										%end
+										<span class="image-wrapper">
+											%if len(artist["images"]) > 0:
+												<img src="{{artist['images'][0]['url']}}" alt="{{artist['name']}}" width = "100" height = "100">
+											%else:
+												<img src="static/img/person-placeholder.jpg" alt="{{artist['name']}}" width = "100" height = "100">
+											%end
+										</span>
 										{{artist["name"]}}
 									</td>
 								</tr>
@@ -185,7 +216,7 @@
 						<table id = "long-term-tracks">
 							<thead>
 								<th>#</th>
-								<th>Track Name</th>
+								<th colspan = "2">Track Name</th>
 								<th>Artist</th>
 								<th>Album</th>
 							</thead>
@@ -193,6 +224,16 @@
 								%for i, track in enumerate(long_term_tracks):
 								<tr>
 									<td>{{i + 1}}</td>
+									<td>
+										%if track["preview_url"]:	
+												<audio class = "audio-track-preview" controls>
+													<source src = "{{track['preview_url']}}" type = "audio/mpeg">
+												</audio>
+										%else:
+												<p>No Preview Available</p>
+											
+										%end
+									</td>
 									<td>{{track["name"]}}</td>
 									<td>
 										<ul>
@@ -206,9 +247,11 @@
 										</ul>
 									</td>
 									<td>
-										%if len(track["album"]["images"]) > 0:
-											<img src="{{track['album']['images'][0]['url']}}" alt="{{track['album']['name']}}" width = "100" height = "100">
-										%end
+										<span class="image-wrapper">
+											%if len(track["album"]["images"]) > 0:
+												<img src="{{track['album']['images'][0]['url']}}" alt="{{track['album']['name']}}" width = "100" height = "100">
+											%end
+										</span>
 										{{track["album"]["name"]}}
 									</td>
 								</tr>
@@ -221,7 +264,7 @@
 		</div> <!-- /#search-wrapper   -->
 	</section> <!-- /section -->
 	<footer>
-		<p>&copy; {{year}} RC Pery.</p>
+		<p>&copy; {{year}} TopPlaylist.</p>
 	</footer>
 	<script src = "../../static/js/most_played.js"></script>
 
