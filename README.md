@@ -30,7 +30,7 @@ This app is not yet in production, so here's a todo-list:
 | Link to Spotify | [x] |
 | Make animations on #showcase #about-text | [] |
 | Smooth slide to #about when about button is clicked | [] |
-| Change button text when logged in (token) | [] |
+| Change button text when logged in ~(token)~ (`LOGIN_STATUS`) | [x] |
 
 
 * search.html
