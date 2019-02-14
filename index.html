@@ -32,7 +32,11 @@
 						</select>
 						<input type="submit" value="Search">
 					</form>
-					<a href="{{link}}" type = "button" id = "spotify-link">Login Using Spotify</a>
+					%if not login_status:
+						<a href="{{link}}" type = "button" id = "spotify-link">Login Using Spotify</a>
+					%else:
+						<a href="/most_played" type = "button" id = "spotify-link">Get Most Played</a>
+					%end
 				</div>
 			</div>
 		</div>
@@ -54,7 +58,7 @@
 	</section>
 	<footer>
 		<p>Icons made by <a href="http://bylucyg.com/" title="Lucy G">Lucy G</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
-		<p>&copy; {{year}} RC Pery.</p>
+		<p>&copy; {{year}} TopPlaylist.</p>
 	</footer>
 	<script src = "static/js/main.js"></script>
 </body>
