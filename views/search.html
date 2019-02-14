@@ -56,11 +56,17 @@
 												%end
 											</ul>
 										</div>
-										<div class="track-preview">
-											<audio controls>
-												<source src = "{{item['preview_url']}}" type = "audio/mpeg">
-											</audio>
-										</div>
+										%if item["preview_url"]:
+											<div class="track-preview">
+												<audio controls>
+													<source src = "{{item['preview_url']}}" type = "audio/mpeg">
+												</audio>
+											</div>
+										%else:
+											<div class="no-preview">
+												<p>No preview available.</p>
+											</div>
+										%end
 										<div class="track-album">
 											<!-- TODO: Make a modal here on album preview.  -->
 											<p>From the album <a href="{{item['album']['external_urls']['spotify']}}" target = "_blank">{{item['album']['name']}}</a>.</p>
@@ -144,7 +150,7 @@
 	<footer>
 		<p>Icons made by <a href="http://bylucyg.com/" title="Lucy G">Lucy G</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></p>
 		<p>
-			&copy; {{year}} RC Pery.
+			&copy; {{year}} TopPlaylist.
 		</p>
 	</footer>
 	<p hidden id = "offset-data">{{offset_data}}</p>
