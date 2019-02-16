@@ -204,7 +204,7 @@ body{
 #showcase #about #about-text{
 	padding: 20px;
 	background: #eee;
-	font-family: Arial;
+	/*font-family: Arial;*/
 	animation-name: load-about;
 	animation-duration: 2s;
 	animation-fill-mode: forwards;
@@ -491,20 +491,13 @@ body{
 
 #most-played-body footer{
 	position:relative;
-	bottom: 100%;
+	bottom: 0%;
+	width: 100%;
 }
 
 #showcase #most-played-wrapper .results-wrapper #short-term, #showcase #most-played-wrapper .results-wrapper #medium-term, #showcase #most-played-wrapper .results-wrapper #long-term{
 	display: none;
-	animation-name: result-slide;
-	animation-duration: 3s;
 } 
-
-/* 
-	TODO:
-		- make css on most_played.html;
-		- animate most_played.html
- */
 
 
 #showcase #most-played-wrapper{
@@ -518,6 +511,7 @@ body{
 
 #showcase #most-played-wrapper #search-field{
  	margin-bottom: 20px;
+ 	padding-top: 10px;
 }
 
 
@@ -604,8 +598,17 @@ body{
 }
 
 #showcase #most-played-wrapper .results-wrapper{
-	border: 3px solid blue;
+	padding-right: 20px;
 }
+
+#showcase #most-played-wrapper .results-wrapper #short-term,
+#showcase #most-played-wrapper .results-wrapper #medium-term,  
+#showcase #most-played-wrapper .results-wrapper #long-term{
+	animation-name: animate-heads;
+	animation-duration: 2s;
+	animation-fill-mode: forwards;
+}
+
 
 
 /* footer */
@@ -652,19 +655,21 @@ footer a:visited{
 
 
 /*animations most-played.html*/
-@keyframes result-slide{
-	from{
-		left: -300px;
-	}
-	to{
-		left: 300px;
-	}
-}
+
 
 /*
 	TODO: 
 		- animations on most_played.html;
 */
+
+@keyframes animate-heads{
+	from{
+		opacity: 0;
+	}
+	to{
+		opacity: 1;
+	}
+}
 
 /*
 	TODO: 
