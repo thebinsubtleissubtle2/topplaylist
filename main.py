@@ -96,10 +96,10 @@ except spotipy.client.SpotifyException:
 def css(filepath):
     return static_file(filepath, root="static/css")
 
-@app.route("/static/font/<filepath:re:.*\.(eot|otf|svg|ttf|woff|woff2?)>")
-@app.route("/static/font/<filepath:re:.*\.(eot|otf|svg|ttf|woff|woff2?)>/")
+@app.route("/static/fonts/<filepath:re:.*\.(eot|otf|svg|ttf|woff|woff2?)>")
+@app.route("/static/fonts/<filepath:re:.*\.(eot|otf|svg|ttf|woff|woff2?)>/")
 def font(filepath):
-    return static_file(filepath, root="static/font")
+    return static_file(filepath, root="static/fonts")
 
 @app.route("/static/img/<filepath:re:.*\.(jpg|jpeg|png|gif|ico|svg)>")
 @app.route("/static/img/<filepath:re:.*\.(jpg|jpeg|png|gif|ico|svg)>/")
