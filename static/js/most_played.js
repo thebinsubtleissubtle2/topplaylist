@@ -1,7 +1,6 @@
 var search_bar_most_played = document.getElementById("most-played-form");
 
 search_bar_most_played.addEventListener("submit", filterList);
-/* TODO: make animations on filterList */
 function filterList(e){
     var type = document.querySelector("#showcase #most-played-form #type").value;
     var term = document.querySelector("#showcase #most-played-form #term").value;
@@ -16,6 +15,7 @@ function filterList(e){
         document.getElementById("short-term-artists").style.display = "none";
         document.getElementById("medium-term").style.display = "none";
         document.getElementById("long-term").style.display = "none";
+        document.getElementById("mode").value = "shortTerm";
     }
 
     else if (type == "artist" && term == "short-term"){
@@ -32,6 +32,7 @@ function filterList(e){
         document.getElementById("medium-term-tracks").style.display = "block";
         document.getElementById("medium-term-artists").style.display = "none";
         document.getElementById("long-term").style.display = "none";
+        document.getElementById("mode").value = "mediumTerm";
     }
 
     else if (type == "artist" && term == "medium-term"){
@@ -48,6 +49,7 @@ function filterList(e){
         document.getElementById("long-term").style.display = "block";
         document.getElementById("long-term-tracks").style.display = "block";
         document.getElementById("long-term-artists").style.display = "none";
+        document.getElementById("mode").value = "longTerm";
     }
     
     else if (type == "artist" && term == "long-term"){
