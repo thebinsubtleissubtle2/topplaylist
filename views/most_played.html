@@ -14,7 +14,6 @@
 		</a>
 		<nav class="nav">
 			<ul class="nav-list">
-				<li><a href="#about">About</a></li>
 				<li><a href="https://www.github.com/thebinsubtleissubtle2/topPlaylist">Github</a></li>
 			</ul>
 		</nav>
@@ -274,9 +273,42 @@
 			</div> <!-- /#.results-wrapper    -->
 		</div> <!-- /#search-wrapper   -->
 	</section> <!-- /section -->
-	<footer>
+	<footer id = "footer">
 		<p>&copy; {{year}} TopPlaylist.</p>
 	</footer>
+
+	<!-- modals -->
+	<div id="make-playlist-modal" class="modal">
+		<div class="modal-content">
+			<div class="modal-header">
+				<span class="close-btn">&times;</span>
+				<h1>Make Playlist</h1>
+				
+			</div>
+			<div class="modal-body">
+				<form action="#make-playlist" id = "make-playlist-form">
+					<div class="form-group">
+						<label for="">Playlist Name</label>
+						<input type="text" name="playlist_name" id="playlist-name" placeholder = "Enter Playlist Name...">
+					</div>
+					<div class="form-group">
+						<label for="">Term</label>
+						<select name="playlist_term" id="playlist-term">
+							<option value="">Select term...</option>
+							<option value="shortTerm">Short Term</option>
+							<option value="mediumTerm">Medium Term</option>
+							<option value="longTerm">Long Term</option>
+						</select>
+					</div>
+					<div id="buttons">
+						<input type="submit" value="Create Playlist">
+						<input type="button" class = "close-btn" value="Close">
+					</div>
+				</form>
+			</div>
+				
+		</div>
+	</div>
 	<input type="hidden" name="mode" id = "mode">
 	<script src = "../../static/js/most_played.js"></script>
 
