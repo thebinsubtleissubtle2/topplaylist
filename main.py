@@ -4,7 +4,8 @@
 import logging
 import os
 import sys
-from bottle import Bottle, run, route, template, TEMPLATE_PATH, error, static_file, redirect, request
+from bottle import app, TEMPLATE_PATH, hook, route, template, static_file, request, error, redirect, run
+from beaker.middleware import SessionMiddleware
 import datetime
 import spotipy
 import spotipy.util
@@ -12,8 +13,6 @@ from spotipy import oauth2
 from spotipy.oauth2 import SpotifyClientCredentials
 import requests
 import json
-
-app = Bottle()
 
 # globals
 logging.basicConfig(level = logging.DEBUG, format = "%(asctime)s - %(levelname)s - %(message)s")
@@ -26,6 +25,13 @@ SP_OAUTH2          = oauth2.SpotifyOAuth(client_id = CLIENT_ID, client_secret = 
 LIMIT              = 50
 OFFSET             = 0
 LOGIN_STATUS       = False
+SESSION_OPTS       = {
+	"session.type": "file",
+	"session.cookie_expires": 300,
+	"session.data_dir": "./session/",
+	"session.auto": True
+}
+SESSION            = SessionMiddleware(app(), SESSION_OPTS)
 
 TEMPLATE_PATH.insert(0, "")
 
@@ -83,6 +89,7 @@ def get_offset_data(prev_offset, next_offset, result, type):
 	offset_data["prev_offset"], offset_data["next_offset"], offset_data["total"] = prev_offset, next_offset, result[type + "s"]["total"]
 	return json.dumps(offset_data)
 
+
 # check if app has token.
 try:
 	spotify = has_token()
@@ -90,110 +97,120 @@ except spotipy.client.SpotifyException:
 	token = get_token()
 	spotify = spotipy.Spotify(auth = token, client_credentials_manager = CLIENT_CREDENTIALS)
 
+@hook("before_request")
+def setup_request():
+	request.session = request.environ["beaker.session"]
+
 # Static Routes
-@app.route("/static/css/<filepath:re:.*\.css>")
-@app.route("/static/css/<filepath:re:.*\.css>/")
+@route("/static/css/<filepath:re:.*\.css>")
+@route("/static/css/<filepath:re:.*\.css>/")
 def css(filepath):
     return static_file(filepath, root="static/css")
 
-@app.route("/static/fonts/<filepath:re:.*\.(eot|otf|svg|ttf|woff|woff2?)>")
-@app.route("/static/fonts/<filepath:re:.*\.(eot|otf|svg|ttf|woff|woff2?)>/")
+@route("/static/fonts/<filepath:re:.*\.(eot|otf|svg|ttf|woff|woff2?)>")
+@route("/static/fonts/<filepath:re:.*\.(eot|otf|svg|ttf|woff|woff2?)>/")
 def font(filepath):
     return static_file(filepath, root="static/fonts")
 
-@app.route("/static/img/<filepath:re:.*\.(jpg|jpeg|png|gif|ico|svg)>")
-@app.route("/static/img/<filepath:re:.*\.(jpg|jpeg|png|gif|ico|svg)>/")
+@route("/static/img/<filepath:re:.*\.(jpg|jpeg|png|gif|ico|svg)>")
+@route("/static/img/<filepath:re:.*\.(jpg|jpeg|png|gif|ico|svg)>/")
 def img(filepath):
     return static_file(filepath, root="static/img")
 
-@app.route("/static/js/<filepath:re:.*\.js>")
-@app.route("/static/js/<filepath:re:.*\.js>/")
+@route("/static/js/<filepath:re:.*\.js>")
+@route("/static/js/<filepath:re:.*\.js>/")
 def js(filepath):
     return static_file(filepath, root="static/js")
 
 # web interface
 
-@app.route("/")
+@route("/")
 def root():
 	"""
 		Route of "/". Redirects to index.html
 	"""
-	global LOGIN_STATUS
-	htmlLoginButton = getSPOauthURI()
-	return template("index.html", year = datetime.datetime.now().year, link = htmlLoginButton, login_status = LOGIN_STATUS)
 
-@app.route("/", method = "POST")
-@app.route("/search/<keyword>/<type>", method = "POST")
-@app.route("/search/<keyword>/<type>/", method = "POST")
+	current_user = None
+	if "logged_in" in request.session:
+		current_user = spotify.current_user()
+		htmlLoginButton = getSPOauthURI()
+		return template("index.html", year = datetime.datetime.now().year, link = htmlLoginButton, login_status = request.session["logged_in"], current_user = current_user)
+	request.session["logged_in"] = False
+
+@route("/", method = "POST")
+@route("/search/<keyword>/<type>", method = "POST")
+@route("/search/<keyword>/<type>/", method = "POST")
 def get_results():
 	redirect("/search/" + request.forms.get("search") + "/" + request.forms.get("type"))
-	search(request.forms.get("search"), request.forms.get("type"))
+	search(request.forms.get("search"), bottle.request.forms.get("type"))
 
-@app.route("/search/<keyword>/<type>")
-@app.route("/search/<keyword>/<type>/")
+@route("/search/<keyword>/<type>")
+@route("/search/<keyword>/<type>/")
 def search(keyword, type):
 	"""
 		Searhces data according to the filters.
 		TODO: check if logged in.
 		TODO: have logged in mode.
 	"""
-	global LOGIN_STATUS
 	get_type = {}
 	get_type["type"] = type
 	result = spotify.search(q = keyword, limit = LIMIT, offset = OFFSET, type = type)
-	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), result = result, type = type), get_type = json.dumps(get_type))
+	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = OFFSET, limit = LIMIT, mode = "next"), result = result, type = type), get_type = json.dumps(get_type), login_status = request.session["logged_in"], current_user = spotify.current_user())
 
 
-@app.route("/search/<keyword>/<type>/<curr_offset:int>")
-@app.route("/search/<keyword>/<type>/<curr_offset:int>/")
+@route("/search/<keyword>/<type>/<curr_offset:int>")
+@route("/search/<keyword>/<type>/<curr_offset:int>/")
 def page(keyword, type, curr_offset):
 	"""
 		returns "search.html". For pagination purposes
 	"""
-	global LOGIN_STATUS
 	if curr_offset < 0:
-		return template("error.html")
+		return bottle.template("error.html")
 	get_type = {}
 	get_type["type"] = type
 	result = spotify.search(q = keyword, limit = LIMIT, offset = curr_offset, type = type)
-	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), result = result, type = type), get_type = json.dumps(get_type))
+	return template("search.html", keyword = keyword, result = result, year = datetime.datetime.now().year, type = type, prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), link = getSPOauthURI(), offset_data = get_offset_data(prev_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "prev"), next_offset = get_offset(offset = curr_offset, limit = LIMIT, mode = "next"), result = result, type = type), get_type = json.dumps(get_type), login_status = request.session["logged_in"], current_user = spotify.current_user())
 
 
-@app.route("/verified")
+@route("/verified")
 def verify():
 	"""
 		Verifies the session.
 	"""
-	global LOGIN_STATUS
 	if get_token():
-		LOGIN_STATUS = True
-		logging.debug("LOGIN_STATUS = {}".format(LOGIN_STATUS))
+		request.session["logged_in"] = True
 		redirect("/most_played")
 
-@app.route("/most_played")
-@app.route("/most_played/")
-@app.route("/most_played", method = "POST")
-@app.route("/most_played/", method = "POST")
+@route("/most_played")
+@route("/most_played/")
+@route("/most_played", method = "POST")
+@route("/most_played/", method = "POST")
 def get_most_played():
 	"""
 		TODO: check if logged in.
 		TODO: have logged in mode.
 	"""
-	global LOGIN_STATUS
-	logging.debug("LOGIN_STATUS = {}".format(LOGIN_STATUS))
-	spotify = spotipy.Spotify(auth = get_token())
-	spotify.trace = False
-	logging.debug("Running get_most_played()")
+	if request.session["logged_in"]:
+		spotify = spotipy.Spotify(auth = get_token())
+		current_user = spotify.current_user()
+		spotify.trace = False
+		logging.debug("Running get_most_played()")
 
-	short_term_artists = spotify.current_user_top_artists(time_range = "short_term", limit = 100)["items"]
-	short_term_tracks = spotify.current_user_top_tracks(time_range = "short_term", limit = 50)["items"]
-	medium_term_artists = spotify.current_user_top_artists(time_range = "medium_term", limit = 100)["items"]
-	medium_term_tracks = spotify.current_user_top_tracks(time_range = "medium_term", limit = 50)["items"]
-	long_term_artists = spotify.current_user_top_artists(time_range = "long_term", limit = 100)["items"]
-	long_term_tracks = spotify.current_user_top_tracks(time_range = "long_term", limit = 50)["items"]
-	return template("most_played.html", spotify = spotify, short_term_artists = short_term_artists, short_term_tracks = short_term_tracks, medium_term_artists = medium_term_artists, medium_term_tracks = medium_term_tracks, long_term_artists = long_term_artists, long_term_tracks = long_term_tracks, year = datetime.datetime.now().year)
+		short_term_artists = spotify.current_user_top_artists(time_range = "short_term", limit = 100)["items"]
+		short_term_tracks = spotify.current_user_top_tracks(time_range = "short_term", limit = 50)["items"]
+		medium_term_artists = spotify.current_user_top_artists(time_range = "medium_term", limit = 100)["items"]
+		medium_term_tracks = spotify.current_user_top_tracks(time_range = "medium_term", limit = 50)["items"]
+		long_term_artists = spotify.current_user_top_artists(time_range = "long_term", limit = 100)["items"]
+		long_term_tracks = spotify.current_user_top_tracks(time_range = "long_term", limit = 50)["items"]
+		return template("most_played.html", spotify = spotify, short_term_artists = short_term_artists, short_term_tracks = short_term_tracks, medium_term_artists = medium_term_artists, medium_term_tracks = medium_term_tracks, long_term_artists = long_term_artists, long_term_tracks = long_term_tracks, year = datetime.datetime.now().year, login_status = request.session["logged_in"], current_user = current_user)
+	else:
+		redirect(getSPOauthURI())
 
-
+@route("/logout")
+def logout():
+	request.session["logged_in"] = False
+	os.unlink(CACHE)
+	redirect("/")
 
 """
 	TODO: make playlist based on filter values and data shown.
@@ -203,10 +220,10 @@ def get_most_played():
 
 
 # error pages
-@app.route("/error")
-@app.error(404)
+@route("/error")
+@error(404)
 def error_page(error):
 	return template("error.html")
 
 if __name__ == "__main__":
-	run(app = app, host = "localhost", port = 8000, debug = True, reloader = True)
+	run(app = SESSION, host = "localhost", port = 8000, debug = True, reloader = True)
