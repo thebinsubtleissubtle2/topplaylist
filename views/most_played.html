@@ -15,6 +15,19 @@
 		<nav class="nav">
 			<ul class="nav-list">
 				<li><a href="https://www.github.com/thebinsubtleissubtle2/topPlaylist">Github</a></li>
+				<li class = "dropdown">
+					%if login_status:
+						<a href="/most_played">
+							%if current_user["display_name"]:
+								{{current_user["display_name"]}}
+							%else:
+								{{current_user["id"]}}
+							%end	
+						</a>
+					%else:
+						<a href="{{link}}">Log in to Spotify</a>
+					%end
+				</li>
 			</ul>
 		</nav>
 	</header> <!-- /header -->	
