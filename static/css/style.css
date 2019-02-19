@@ -165,22 +165,6 @@ body{
 	padding: 10px;
 }
 
-#showcase #landing #spotify-link{
-	border-radius: 40px;
-	padding: 15px;
-	text-decoration: none;
-	font-size: 20px;
-	background: #1ed760;
-	color: #eee;
-}
-
-#showcase #landing #spotify-link:hover{
-	border: none;
-	text-decoration: underline;
-	color: #eee;
-}
-
-
 
 
 /* #showcase search.html */
