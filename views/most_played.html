@@ -49,7 +49,8 @@
 						</select>
 						<input type="submit" value="Search">
 					</form>
-					<button id="make-playlist">Make Playlist</button>
+						
+<!-- 					<button id="make-playlist">Make Playlist</button> -->
 				</div>
 			</div>
 			
@@ -82,6 +83,7 @@
 								%end
 							</tbody>
 						</table>
+						<a href="#make-playlist-modal" type = "button" id="make-playlist">Make Playlist</a>
 						<table id = "short-term-tracks">
 							<thead>
 								<th>#</th>
@@ -158,6 +160,7 @@
 								%end
 							</tbody>
 						</table>
+						<a href="#make-playlist-modal" type = "button" id="make-playlist">Make Playlist</a>
 						<table id = "medium-term-tracks">
 							<thead>
 								<th>#</th>
@@ -234,6 +237,7 @@
 								%end
 							</tbody>
 						</table>
+						<a href="#make-playlist-modal" type = "button" id="make-playlist">Make Playlist</a>
 						<table id = "long-term-tracks">
 							<thead>
 								<th>#</th>
@@ -294,12 +298,12 @@
 	<div id="make-playlist-modal" class="modal">
 		<div class="modal-content">
 			<div class="modal-header">
-				<span class="close-btn">&times;</span>
+				<span><a href="#" class="close-btn">&times;</a></span>
 				<h1>Make Playlist</h1>
 				
 			</div>
 			<div class="modal-body">
-				<form action="#make-playlist" id = "make-playlist-form">
+				<form action="/most_played#make-playlist" id = "make-playlist-form">
 					<div class="form-group">
 						<label for="">Playlist Name</label>
 						<input type="text" name="playlist_name" id="playlist-name" placeholder = "Enter Playlist Name...">
