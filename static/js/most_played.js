@@ -30,7 +30,7 @@ function filterList(e){
         document.getElementById("mode").value = "shortTerm";
         footer.style.display = "block";
         footer.style.position = "relative";
-
+        modal_button.style.display = "block";
     }
 
     else if (type == "artist" && term == "short-term"){
@@ -41,6 +41,7 @@ function filterList(e){
         document.getElementById("long-term").style.display = "none";
         footer.style.display = "block";
         footer.style.position = "relative";
+        modal_button.style.display = "none";
     }
 
     else if (type == "track" && term == "medium-term"){
@@ -52,6 +53,7 @@ function filterList(e){
         document.getElementById("mode").value = "mediumTerm";
         footer.style.display = "block";
         footer.style.position = "relative";
+        modal_button.style.display = "block";
     }
 
     else if (type == "artist" && term == "medium-term"){
@@ -62,6 +64,7 @@ function filterList(e){
         document.getElementById("long-term").style.display = "none";
         footer.style.display = "block";
         footer.style.position = "relative";
+        modal_button.style.display = "none";
     }
 
     else if (type == "track" && term == "long-term"){
@@ -73,6 +76,7 @@ function filterList(e){
         document.getElementById("mode").value = "longTerm";
         footer.style.display = "block";
         footer.style.position = "relative";
+        modal_button.style.display = "block";
     }
     
     else if (type == "artist" && term == "long-term"){
@@ -83,6 +87,7 @@ function filterList(e){
         document.getElementById("long-term-artists").style.display = "block";
         footer.style.display = "block";
         footer.style.position = "relative";
+        modal_button.style.display = "none";
     }
 }
 
