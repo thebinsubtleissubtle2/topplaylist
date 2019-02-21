@@ -18,7 +18,7 @@ import json
 logging.basicConfig(level = logging.DEBUG, format = "%(asctime)s - %(levelname)s - %(message)s")
 CLIENT_ID          = "e29426dfb22c41cdbc92122fbb9c398c"
 CLIENT_SECRET      = "837fd2824bec47e5a003419165674bdd"
-SCOPE              = "user-top-read user-read-recently-played playlist-modify-public playlist-modify-private"
+SCOPE              = "playlist-modify-public playlist-modify-private playlist-read-private playlist-read-collaborative user-read-recently-played user-top-read"
 CACHE              = ".spotifyoauthcache"
 CLIENT_CREDENTIALS = SpotifyClientCredentials(client_id = CLIENT_ID, client_secret = CLIENT_SECRET)
 SP_OAUTH2          = oauth2.SpotifyOAuth(client_id = CLIENT_ID, client_secret = CLIENT_SECRET, redirect_uri = "http://localhost:8000/verified", scope = SCOPE, cache_path = CACHE)
@@ -27,7 +27,7 @@ OFFSET             = 0
 LOGIN_STATUS       = False
 SESSION_OPTS       = {
 	"session.type": "file",
-	"session.cookie_expires": 300,
+	"session.cookie_expires": True,
 	"session.data_dir": "./session/",
 	"session.auto": True
 }
@@ -91,11 +91,8 @@ def get_offset_data(prev_offset, next_offset, result, type):
 
 
 # check if app has token.
-try:
-	spotify = has_token()
-except spotipy.client.SpotifyException:
-	token = get_token()
-	spotify = spotipy.Spotify(auth = token, client_credentials_manager = CLIENT_CREDENTIALS)
+spotify = has_token()
+
 
 @hook("before_request")
 def setup_request():
@@ -129,14 +126,16 @@ def root():
 	"""
 		Route of "/". Redirects to index.html
 	"""
-
 	current_user = None
 	if "logged_in" in request.session:
-		current_user = spotify.current_user()
-		htmlLoginButton = getSPOauthURI()
-		return template("index.html", year = datetime.datetime.now().year, link = htmlLoginButton, login_status = request.session["logged_in"], current_user = current_user)
-	request.session["logged_in"] = False
+		if request.session["logged_in"]:
+			current_user = spotify.current_user()
+		
+	else:
+		request.session["logged_in"] = False
 
+	htmlLoginButton = getSPOauthURI()
+	return template("index.html", year = datetime.datetime.now().year, link = htmlLoginButton, login_status = request.session["logged_in"], current_user = current_user)
 @route("/", method = "POST")
 @route("/search/<keyword>/<type>", method = "POST")
 @route("/search/<keyword>/<type>/", method = "POST")
@@ -214,10 +213,7 @@ def logout():
 
 """
 	TODO: make playlist based on filter values and data shown.
-	TODO: make function that handles pagination.
 """
-
-
 
 # error pages
 @route("/error")
