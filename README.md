@@ -28,8 +28,8 @@ This app is not yet in production, so here's a todo-list:
 | Make landing page | [x] |
 | Parallax website | [x] |
 | Link to Spotify | [x] |
-| Make animations on #showcase #about-text | [] |
-| Smooth slide to #about when about button is clicked | [] |
+~| Make animations on #showcase #about-text | [] |~
+~| Smooth slide to #about when about button is clicked | [] |~
 | Change button text when logged in ~(token)~ (`LOGIN_STATUS`) | [x] |
 
 
@@ -47,11 +47,11 @@ This app is not yet in production, so here's a todo-list:
 
 | Task | status |
 | ---- | ------ |
-| Animations on displaying results when this page is loaded. | [] |
+| Animations on displaying results when this page is loaded. | [x] |
 | ~Make use of AJAX when filtering values from the filter bar.~ Make the results disappear the moment the page loads. | [x] |
 | Search function | [] |
 | Get the 30-sec preview on each song | [x] |
-| Make playlist based on these results | [] |
+| Make playlist based on these results | [x] |
 
 * Others
 
