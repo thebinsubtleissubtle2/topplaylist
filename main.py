@@ -151,6 +151,15 @@ def search(keyword, type):
 		TODO: check if logged in.
 		TODO: have logged in mode.
 	"""
+
+	current_user = None
+	if "logged_in" in request.session:
+		if request.session["logged_in"]:
+			current_user = spotify.current_user()
+		
+	else:
+		request.session["logged_in"] = False
+
 	get_type = {}
 	get_type["type"] = type
 	result = spotify.search(q = keyword, limit = LIMIT, offset = OFFSET, type = type)
@@ -163,8 +172,17 @@ def page(keyword, type, curr_offset):
 	"""
 		returns "search.html". For pagination purposes
 	"""
+
+	current_user = None
+	if "logged_in" in request.session:
+		if request.session["logged_in"]:
+			current_user = spotify.current_user()
+		
+	else:
+		request.session["logged_in"] = False
+
 	if curr_offset < 0:
-		return bottle.template("error.html")
+		return template("error.html")
 	get_type = {}
 	get_type["type"] = type
 	result = spotify.search(q = keyword, limit = LIMIT, offset = curr_offset, type = type)
@@ -182,28 +200,47 @@ def verify():
 
 @route("/most_played")
 @route("/most_played/")
-@route("/most_played", method = "POST")
-@route("/most_played/", method = "POST")
 def get_most_played():
 	"""
 		TODO: check if logged in.
 		TODO: have logged in mode.
 	"""
-	if request.session["logged_in"]:
-		spotify = spotipy.Spotify(auth = get_token())
-		current_user = spotify.current_user()
-		spotify.trace = False
-		logging.debug("Running get_most_played()")
+	if "logged_in" in request.session:
+		if request.session["logged_in"]:
+			spotify = spotipy.Spotify(auth = get_token())
+			current_user = spotify.current_user()
+			spotify.trace = False
+			logging.debug("Running get_most_played()")
 
-		short_term_artists = spotify.current_user_top_artists(time_range = "short_term", limit = 100)["items"]
-		short_term_tracks = spotify.current_user_top_tracks(time_range = "short_term", limit = 50)["items"]
-		medium_term_artists = spotify.current_user_top_artists(time_range = "medium_term", limit = 100)["items"]
-		medium_term_tracks = spotify.current_user_top_tracks(time_range = "medium_term", limit = 50)["items"]
-		long_term_artists = spotify.current_user_top_artists(time_range = "long_term", limit = 100)["items"]
-		long_term_tracks = spotify.current_user_top_tracks(time_range = "long_term", limit = 50)["items"]
-		return template("most_played.html", spotify = spotify, short_term_artists = short_term_artists, short_term_tracks = short_term_tracks, medium_term_artists = medium_term_artists, medium_term_tracks = medium_term_tracks, long_term_artists = long_term_artists, long_term_tracks = long_term_tracks, year = datetime.datetime.now().year, login_status = request.session["logged_in"], current_user = current_user)
+			short_term_artists = spotify.current_user_top_artists(time_range = "short_term", limit = 100)["items"]
+			short_term_tracks = spotify.current_user_top_tracks(time_range = "short_term", limit = 50)["items"]
+			medium_term_artists = spotify.current_user_top_artists(time_range = "medium_term", limit = 100)["items"]
+			medium_term_tracks = spotify.current_user_top_tracks(time_range = "medium_term", limit = 50)["items"]
+			long_term_artists = spotify.current_user_top_artists(time_range = "long_term", limit = 100)["items"]
+			long_term_tracks = spotify.current_user_top_tracks(time_range = "long_term", limit = 50)["items"]
+			return template("most_played.html", spotify = spotify, short_term_artists = short_term_artists, short_term_tracks = short_term_tracks, medium_term_artists = medium_term_artists, medium_term_tracks = medium_term_tracks, long_term_artists = long_term_artists, long_term_tracks = long_term_tracks, year = datetime.datetime.now().year, login_status = request.session["logged_in"], current_user = current_user)
+		else:
+			redirect(getSPOauthURI())
 	else:
+		request.session["logged_in"] = False
 		redirect(getSPOauthURI())
+
+@route("/most_played", method = "POST")
+@route("/most_played/", method = "POST")
+def make_playlist():
+	logging.debug("Running make_playlist()")
+	playlist_name = request.forms.get("playlist_name")
+	playlist_desc = request.forms.get("playlist_desc")
+	playlist_term = request.forms.get("playlist_term")
+
+
+	track_list = []
+	playlist_obj = spotify.user_playlist_create(spotify.current_user()["id"], playlist_name, public = True, description = playlist_desc)
+	tracks = spotify.current_user_top_tracks(time_range = playlist_term, limit = 50)["items"]
+	for track in tracks:
+		track_list.append(track["id"])
+	spotify.user_playlist_add_tracks(user = spotify.current_user()["id"], playlist_id = playlist_obj["id"], tracks = track_list)
+	redirect("/most_played")
 
 @route("/logout")
 def logout():
