@@ -34,24 +34,22 @@
 	<section id="showcase">
 		<div id="most-played-wrapper">
 			<div id="search-field">
-				<div class="container">
-					<form action="/most_played" method = "post" id = "most-played-form">
-						<select name="type" id="type">
-							<option value="">Select type</option>
-							<option value="artist">Artist</option>
-							<option value="track">Track</option>
-						</select>
-						<select name="term" id="term">
-							<option value="">Select Term</option>
-							<option value="short-term">Short Term</option>
-							<option value="medium-term">Medium Term</option>
-							<option value="long-term">Long Term</option>
-						</select>
-						<input type="submit" value="Search">
-					</form>
+				<form action="/most_played" method = "post" id = "most-played-form">
+					<select name="type" id="type">
+						<option value="">Select type</option>
+						<option value="artist">Artist</option>
+						<option value="track">Track</option>
+					</select>
+					<select name="term" id="term">
+						<option value="">Select Term</option>
+						<option value="short_term">Short Term</option>
+						<option value="medium_term">Medium Term</option>
+						<option value="long_term">Long Term</option>
+					</select>
+					<input type="submit" value="Search">
+				</form>
 						
 <!-- 					<button id="make-playlist">Make Playlist</button> -->
-				</div>
 			</div>
 			
 			<div class="results-wrapper">
@@ -83,7 +81,7 @@
 								%end
 							</tbody>
 						</table>
-						<a href="#make-playlist-modal" type = "button" id="make-playlist">Make Playlist</a>
+						<a href="#make-playlist-modal" type = "button" class="make-playlist">Make Playlist</a>
 						<table id = "short-term-tracks">
 							<thead>
 								<th>#</th>
@@ -160,7 +158,7 @@
 								%end
 							</tbody>
 						</table>
-						<a href="#make-playlist-modal" type = "button" id="make-playlist">Make Playlist</a>
+						<a href="#make-playlist-modal" type = "button" class="make-playlist">Make Playlist</a>
 						<table id = "medium-term-tracks">
 							<thead>
 								<th>#</th>
@@ -237,7 +235,7 @@
 								%end
 							</tbody>
 						</table>
-						<a href="#make-playlist-modal" type = "button" id="make-playlist">Make Playlist</a>
+						<a href="#make-playlist-modal" type = "button" class="make-playlist">Make Playlist</a>
 						<table id = "long-term-tracks">
 							<thead>
 								<th>#</th>
@@ -303,20 +301,16 @@
 				
 			</div>
 			<div class="modal-body">
-				<form action="/most_played#make-playlist" id = "make-playlist-form">
+				<form action="/most_played" id = "make-playlist-form" method = "POST">
 					<div class="form-group">
 						<label for="">Playlist Name</label>
 						<input type="text" name="playlist_name" id="playlist-name" placeholder = "Enter Playlist Name...">
 					</div>
 					<div class="form-group">
-						<label for="">Term</label>
-						<select name="playlist_term" id="playlist-term">
-							<option value="">Select term...</option>
-							<option value="shortTerm">Short Term</option>
-							<option value="mediumTerm">Medium Term</option>
-							<option value="longTerm">Long Term</option>
-						</select>
+						<label for="">Playlist Description</label>
+						<textarea name="playlist_desc" id="playlist-desc" cols="30" rows="10">Playlist Description</textarea>
 					</div>
+					<input type="hidden" name="playlist_term" id = "playlist-term">
 					<div id="buttons">
 						<input type="submit" value="Create Playlist">
 						<input type="button" class = "close-btn" value="Close">
@@ -326,7 +320,6 @@
 				
 		</div>
 	</div>
-	<input type="hidden" name="mode" id = "mode">
 	<script src = "../../static/js/most_played.js"></script>
 
 </body>
