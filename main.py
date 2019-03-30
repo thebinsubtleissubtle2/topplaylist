@@ -27,7 +27,7 @@ OFFSET             = 0
 LOGIN_STATUS       = False
 SESSION_OPTS       = {
 	"session.type": "file",
-	"session.cookie_expires": 6000,
+	"session.cookie_expires": True,
 	"session.data_dir": "./session/",
 	"session.auto": True
 }
@@ -71,12 +71,6 @@ def getSPOauthURI():
 	return auth_url
 
 
-def has_token():
-	if not get_token():
-		get_token()
-	spotify = spotipy.Spotify(auth = get_token(), client_credentials_manager = CLIENT_CREDENTIALS)
-	return spotify
-
 def get_offset(offset, limit, mode):
 	""" Gets offset according to modes. """
 	if mode == "next":
@@ -91,7 +85,7 @@ def get_offset_data(prev_offset, next_offset, result, type):
 
 
 # check if app has token.
-spotify = has_token()
+spotify = spotipy.Spotify(auth = get_token(), client_credentials_manager = CLIENT_CREDENTIALS)
 
 
 @hook("before_request")
