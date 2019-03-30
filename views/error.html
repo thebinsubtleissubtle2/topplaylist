@@ -6,6 +6,30 @@
 	<link rel="stylesheet" href="static/css/style.css">
 </head>
 <body>
+	<header id="main-header">
+		<a href="/" id = "home">
+			<h1>TopPlaylist</h1>
+		</a>
+		<nav class="nav">
+			<ul class="nav-list">
+				<li><a href="https://www.github.com/thebinsubtleissubtle2/topPlaylist">Github</a></li>
+				%if login_status:
+					<li>
+						<a href="/most_played">
+							%if current_user["display_name"]:
+								{{current_user["display_name"]}}
+							%else:
+								{{current_user["id"]}}
+							%end	
+						</a>
+					</li>
+					<li><a href="/logout">Logout</a></li>
+				%else:
+					<li><a href="{{link}}">Log in to Spotify</a></li>
+				%end
+			</ul>
+			</nav>
+	</header> <!-- /header -->	
 	<section id="showcase">
 		<h1>ERROR</h1>
 		<p>¯\_(ツ)_/¯</p>
