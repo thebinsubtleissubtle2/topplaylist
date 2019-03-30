@@ -27,7 +27,7 @@ OFFSET             = 0
 LOGIN_STATUS       = False
 SESSION_OPTS       = {
 	"session.type": "file",
-	"session.cookie_expires": True,
+	"session.cookie_expires": 6000,
 	"session.data_dir": "./session/",
 	"session.auto": True
 }
@@ -133,15 +133,15 @@ def root():
 		
 	else:
 		request.session["logged_in"] = False
-
 	htmlLoginButton = getSPOauthURI()
 	return template("index.html", year = datetime.datetime.now().year, link = htmlLoginButton, login_status = request.session["logged_in"], current_user = current_user)
+
 @route("/", method = "POST")
 @route("/search/<keyword>/<type>", method = "POST")
 @route("/search/<keyword>/<type>/", method = "POST")
 def get_results():
 	redirect("/search/" + request.forms.get("search") + "/" + request.forms.get("type"))
-	search(request.forms.get("search"), bottle.request.forms.get("type"))
+	search(request.forms.get("search"), request.forms.get("type"))
 
 @route("/search/<keyword>/<type>")
 @route("/search/<keyword>/<type>/")
@@ -247,10 +247,6 @@ def logout():
 	request.session["logged_in"] = False
 	os.unlink(CACHE)
 	redirect("/")
-
-"""
-	TODO: make playlist based on filter values and data shown.
-"""
 
 # error pages
 @route("/error")
