@@ -54,7 +54,8 @@ function filterList(e){
             footer.style.position = "relative";
             long_modal_button.style.display = "none";
         }
-    } else if (type == "track") {
+    } 
+    else if (type == "track"){
         if (term == "short_term") {
             document.getElementById("short-term").style.display = "block";
             document.getElementById("short-term-tracks").style.display = "block";
@@ -77,11 +78,11 @@ function filterList(e){
             document.getElementById("short-term").style.display = "none";
             document.getElementById("medium-term").style.display = "none";
             document.getElementById("long-term").style.display = "block";
-            document.getElementById("long-term-tracks").style.display = "none";
-            document.getElementById("long-term-artists").style.display = "block";
+            document.getElementById("long-term-tracks").style.display = "block";
+            document.getElementById("long-term-artists").style.display = "none";
             footer.style.display = "block";
             footer.style.position = "relative";
-            long_modal_button.style.display = "none";
+            long_modal_button.style.display = "block";
         }
     }
 }
