@@ -32,7 +32,7 @@ body{
 	width: 200px;
 }
 
-#main-header .nav ul{
+#main-header .nav .nav-list{
 	padding: 0;
 	list-style: none;
 	float: right;
@@ -176,7 +176,7 @@ body{
 #showcase #search-wrapper .results-wrapper{
 	text-align:center;
 	padding-top: 20px;
-	border-top: 3px solid #84bd00;
+	/* border-top: 3px solid #84bd00; */
 }
 
 /* #search-area-search */
@@ -453,11 +453,13 @@ body{
  	margin-bottom: 20px;
  	padding-top: 10px;
  	padding-bottom: 40px;
- 	border: 3px solid #84bd00;
- 	text-align: center;
+	text-align: center;
+	width: 100%;
 }
 
-
+#showcase #most-played-wrapper #search-field #most-played-form{
+	padding-left: 200px;
+}
 
 #showcase #most-played-wrapper #search-field #most-played-form #type{
 	background: transparent;
@@ -465,7 +467,7 @@ body{
 	border-radius: 40px;
 	padding: 10px;
 	color: #aaa;
-	width: 12%;
+	width: 200px;
 	font-size: 18px;
 	transition-property: background, color, border;
 	transition-duration: 0.225s;
@@ -485,7 +487,7 @@ body{
 	border-radius: 40px;
 	padding: 10px;
 	color: #aaa;
-	width: 10%;
+	width: 100px;
 	font-size: 18px;
 	transition-property: background, color, border;
 	transition-duration: 0.225s;
@@ -505,7 +507,7 @@ body{
 	border-radius: 40px;
 	padding: 10px;
 	color: #aaa;
-	width: 15%;
+	width: 200px;
 	font-size: 18px;
 	transition-property: background, color, border;
 	transition-duration: 0.225s;
@@ -694,6 +696,67 @@ footer a:visited{
 		- make every page responsive (@media(min-width));
 */
 
-@media(max-width:1280px){
+
+@media (max-width: 624px){
+	* {
+		font-size: 1em;
+	}
+}
+
+@media (max-width: 968px){
 	
+	
+	#showcase #most-played-wrapper #search-field #most-played-form #type{
+		width: 100px;
+		font-size: 1em;
+	}
+	#showcase #most-played-wrapper #search-field #most-played-form #term{
+		width: 100px;
+		font-size: 1em;
+	}
+
+	#showcase #most-played-wrapper #search-field #most-played-form input[type = "submit"]{
+		width: 100px;
+		font-size: 1em;
+	}
+
+	.modal{
+		width: 100%;
+	}
+
+	#short-term-tracks, #medium-term-tracks, #long-term-tracks, #short-term-artists, #medium-term-artists, #long-term-artists, thead, tbody, th, td, tr{
+		display: block;
+	}
+
+	#short-term-tracks thead tr, #medium-term-tracks thead tr, #long-term-tracks thead tr, #short-term-artists thead tr, #medium-term-artists thead tr, #long-term-artists thead tr{
+		position: absolute;
+		top: -9999px;
+		left: -9999px;
+	}
+
+	#short-term-tracks td, #medium-term-tracks td, #long-term-tracks td, #short-term-artists td, #medium-term-artists td, #long-term-artists td{
+		border: none;
+		position: relative;
+		padding-left: 50%;
+	}
+
+	#short-term-tracks td:before, #medium-term-tracks td:before, #long-term-tracks td:before, #short-term-artists td:before, #medium-term-artists td:before, #long-term-artists td:before{
+		position:absolute;
+		top: 6px;
+		left: 6px;
+		width: 45%;
+		padding-right: 10px;
+		white-space: nowrap; 
+	}
+
+	#short-term-tracks td:nth-of-type(1):before, #medium-term-tracks td:nth-of-type(1):before, #long-term-tracks td:nth-of-type(1):before { content: "#"; }
+	#short-term-tracks td:nth-of-type(2):before, #medium-term-tracks td:nth-of-type(2):before, #long-term-tracks td:nth-of-type(2):before { content: "Preview"; }
+	#short-term-tracks td:nth-of-type(3):before, #medium-term-tracks td:nth-of-type(3):before, #long-term-tracks td:nth-of-type(3):before { content: "Track name"; }
+	#short-term-tracks td:nth-of-type(4):before, #medium-term-tracks td:nth-of-type(4):before, #long-term-tracks td:nth-of-type(4):before { content: "Artist"; }
+	#short-term-tracks td:nth-of-type(5):before, #medium-term-tracks td:nth-of-type(5):before, #long-term-tracks td:nth-of-type(5):before { content: "Album image"; }
+	#short-term-tracks td:nth-of-type(6):before, #medium-term-tracks td:nth-of-type(6):before, #long-term-tracks td:nth-of-type(6):before { content: "Album name"; }
+
+	#short-term-artists td:nth-of-type(1):before, #medium-term-artists td:nth-of-type(1):before, #long-term-artists td:nth-of-type(1):before { content: "#"; }
+	#short-term-artists td:nth-of-type(2):before, #medium-term-artists td:nth-of-type(2):before, #long-term-artists td:nth-of-type(2):before { content: "Artist Image"; }
+	#short-term-artists td:nth-of-type(3):before, #medium-term-artists td:nth-of-type(3):before, #long-term-artists td:nth-of-type(3):before { content: "Artist name"; }
 }
