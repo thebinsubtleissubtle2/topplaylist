@@ -212,7 +212,7 @@ def get_most_played():
 			medium_term_tracks = spotify.current_user_top_tracks(time_range = "medium_term", limit = 50)["items"]
 			long_term_artists = spotify.current_user_top_artists(time_range = "long_term", limit = 100)["items"]
 			long_term_tracks = spotify.current_user_top_tracks(time_range = "long_term", limit = 50)["items"]
-			return template("most_played.html", spotify = spotify, short_term_artists = short_term_artists, short_term_tracks = short_term_tracks, medium_term_artists = medium_term_artists, medium_term_tracks = medium_term_tracks, long_term_artists = long_term_artists, long_term_tracks = long_term_tracks, year = datetime.datetime.now().year, login_status = request.session["logged_in"], current_user = current_user)
+			return template("most_played.html", spotify = spotify, short_term_artists = short_term_artists, short_term_tracks = short_term_tracks, medium_term_artists = medium_term_artists, medium_term_tracks = medium_term_tracks, long_term_artists = long_term_artists, long_term_tracks = long_term_tracks, year = datetime.datetime.now().year, login_status = request.session["logged_in"], current_user = current_user, date = datetime.datetime.now())
 		else:
 			redirect(getSPOauthURI())
 	else:
