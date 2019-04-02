@@ -89,8 +89,6 @@ function filterList(e){
 
 function open_modal(){
     modal.style.display = "block";
-    document.getElementById("playlist-name").value = "Playlist 02-23-2019";
-    document.getElementById("playlist-term").value = document.getElementById("term").value;
 }
 
 function close_modal(){
